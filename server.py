@@ -1,0 +1,54 @@
+import mesa
+from mesa.visualization.ModularVisualization import ModularServer
+from mesa.visualization.modules import CanvasGrid, ChartModule
+
+from app.agents.box import Box
+from app.agents.goal import Goal
+from app.agents.robot import Robot
+from app.model.model import SokobanModel
+from app.agents.wall import Wall
+from app.agents.expansionOrder import ExpansionOrder
+import resources.icons as icons
+
+NUMBER_OF_CELLS = 3
+SIZE_OF_CANVAS_IN_PIXELS_X = 500
+SIZE_OF_CANVAS_IN_PIXELS_Y = 500
+
+simulation_params = {
+    "agentsAmount": mesa.visualization.Slider(name='Number of Agents', value=2, min_value=1, max_value=200, step=1,
+                                              description="seleccionar numero de agentes"),
+    "width": NUMBER_OF_CELLS,
+    "height": NUMBER_OF_CELLS
+}
+
+
+def agent_portrayal(agent):
+    portrayal = {"Shape": "resources/icons/pavimentacion.png", "Layer": 0}
+    if isinstance(agent, Wall):
+        return {"Shape": "resources/icons/muro.png", "Layer": 0}
+    elif isinstance(agent, ExpansionOrder):
+        return {"Shape": "rect", "w": 1, "h": 1, "Filled": True, "Color": "#DFC49C", "text": "1", "text_color": "Black",
+                "Layer": 1}
+    elif isinstance(agent, Robot):
+        return {"Shape": "resources/icons/robot.png", "Layer": 0}
+    elif isinstance(agent, Goal):
+        return {"Shape": "resources/icons/bandera.png", "Layer": 0}
+    elif isinstance(agent, Box):
+        return {"Shape": "resources/icons/paquete.png", "Layer": 0}
+    return portrayal
+
+
+grid = CanvasGrid(agent_portrayal, NUMBER_OF_CELLS, NUMBER_OF_CELLS, SIZE_OF_CANVAS_IN_PIXELS_X,
+                  SIZE_OF_CANVAS_IN_PIXELS_Y)
+
+chart_currents = ChartModule(
+    [
+        {"Label": "Wealthy Agents", "Color": "", "label": "Poder", "backgroundColor": "Blue"},
+        {"Label": "Non Wealthy Agents", "Color": "", "label": "No Poder", "backgroundColor": "Red"},
+    ],
+    data_collector_name="datacollector"
+)
+
+server = ModularServer(SokobanModel, [grid, chart_currents], "Sokoban", model_params=simulation_params)
+server.port = 8521
+server.launch()
