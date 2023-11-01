@@ -1,7 +1,7 @@
 import mesa
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
-
+from app.File.file import File
 from app.agents.box import Box
 from app.agents.goal import Goal
 from app.agents.robot import Robot
@@ -10,15 +10,17 @@ from app.agents.wall import Wall
 from app.agents.expansionOrder import ExpansionOrder
 import resources.icons as icons
 
-NUMBER_OF_CELLS = 3
+world = File.uploadMap(self=None)
+COLUMNS = len(world[0])
+ROWS = len(world)
 SIZE_OF_CANVAS_IN_PIXELS_X = 500
 SIZE_OF_CANVAS_IN_PIXELS_Y = 500
 
 simulation_params = {
     "agentsAmount": mesa.visualization.Slider(name='Number of Agents', value=2, min_value=1, max_value=200, step=1,
                                               description="seleccionar numero de agentes"),
-    "width": NUMBER_OF_CELLS,
-    "height": NUMBER_OF_CELLS
+    "width": COLUMNS,
+    "height": ROWS
 }
 
 
@@ -38,7 +40,7 @@ def agent_portrayal(agent):
     return portrayal
 
 
-grid = CanvasGrid(agent_portrayal, NUMBER_OF_CELLS, NUMBER_OF_CELLS, SIZE_OF_CANVAS_IN_PIXELS_X,
+grid = CanvasGrid(agent_portrayal, COLUMNS, ROWS, SIZE_OF_CANVAS_IN_PIXELS_X,
                   SIZE_OF_CANVAS_IN_PIXELS_Y)
 
 chart_currents = ChartModule(
