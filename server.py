@@ -1,14 +1,13 @@
 import mesa
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
-from app.File.file import File
+from app.file.file import File
 from app.agents.box import Box
 from app.agents.goal import Goal
 from app.agents.robot import Robot
 from app.model.model import SokobanModel
 from app.agents.wall import Wall
 from app.agents.expansionOrder import ExpansionOrder
-import resources.icons as icons
 
 world = File.uploadMap(self=None)
 COLUMNS = len(world[0])
@@ -30,13 +29,13 @@ def agent_portrayal(agent):
         return {"Shape": "resources/icons/muro.png", "Layer": 0}
     elif isinstance(agent, ExpansionOrder):
         return {"Shape": "rect", "w": 1, "h": 1, "Filled": True, "Color": "#DFC49C", "text": "1", "text_color": "Black",
-                "Layer": 1}
+                "Layer": 2}
     elif isinstance(agent, Robot):
-        return {"Shape": "resources/icons/robot.png", "Layer": 0}
+        return {"Shape": "resources/icons/robot.png", "Layer": 2}
     elif isinstance(agent, Goal):
-        return {"Shape": "resources/icons/bandera.png", "Layer": 0}
+        return {"Shape": "resources/icons/bandera.png", "Layer": 1}
     elif isinstance(agent, Box):
-        return {"Shape": "resources/icons/paquete.png", "Layer": 0}
+        return {"Shape": "resources/icons/paquete.png", "Layer": 2}
     return portrayal
 
 

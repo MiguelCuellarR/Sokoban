@@ -1,7 +1,7 @@
 import mesa
-
 from app.agents.box import Box
-from app.File.file import File
+from app.agents.road import Road
+from app.file.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
 from app.agents.robot import Robot
@@ -15,7 +15,7 @@ from mesa import Model
 class SokobanModel(Model):
 
     def __init__(self, agentsAmount, width, height):
-        world = File.uploadMap(self)
+        world = File.uploadMap(self=None)
         self.agentsAmount = agentsAmount
         width = len(world[0])
         height = len(world)
@@ -31,11 +31,12 @@ class SokobanModel(Model):
         for i in range(width):
             for j in range(height):
                 field = world[j][i]
+                print(field)
                 if field == "M":
                     x = x + 1
-                    expansionOrder = ExpansionOrder(x, self)
-                    self.grid.place_agent(expansionOrder, (i, j))
-                    self.schedule.add(expansionOrder)
+                    road = Road(x, self)
+                    self.grid.place_agent(road, (i, j))
+                    self.schedule.add(road)
 
                     x = x + 1
                     goal = Goal(x, self)
@@ -43,20 +44,20 @@ class SokobanModel(Model):
                     self.schedule.add(goal)
 
                 if field == "C":
-                    expansionOrder = ExpansionOrder(x, self)
-                    self.grid.place_agent(expansionOrder, (i, j))
-                    self.schedule.add(expansionOrder)
+                    road = Road(x, self)
+                    self.grid.place_agent(road, (i, j))
+                    self.schedule.add(road)
 
                 if field == "R":
                     wall = Wall(x, self)
                     self.grid.place_agent(wall, (i, j))
                     self.schedule.add(wall)
 
-                if field[0:4] == "C-a-":
+                if field[0:3] == "C-a":
                     x = x + 1
-                    expansionOrder = ExpansionOrder(x, self)
-                    self.grid.place_agent(expansionOrder, (i, j))
-                    self.schedule.add(expansionOrder)
+                    road = Road(x, self)
+                    self.grid.place_agent(road, (i, j))
+                    self.schedule.add(road)
 
                     x = x + 1
                     robot = Robot(x, self)
@@ -65,9 +66,9 @@ class SokobanModel(Model):
 
                 if field[0:4] == "C-b-":
                     x = x + 1
-                    expansionOrder = ExpansionOrder(x, self)
-                    self.grid.place_agent(expansionOrder, (i, j))
-                    self.schedule.add(expansionOrder)
+                    road = Road(x, self)
+                    self.grid.place_agent(road, (i, j))
+                    self.schedule.add(road)
 
                     x = x + 1
                     box = Box(x, self)
