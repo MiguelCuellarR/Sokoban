@@ -14,7 +14,6 @@ from app.generalFunctions.generalFunction import createMapObject
 
 
 class SokobanModel(Model):
-
     def __init__(self, agentsAmount, width, height):
         self.world = File.uploadMap(self=None)
         self.agentsAmount = agentsAmount
@@ -29,15 +28,22 @@ class SokobanModel(Model):
         )
         self.mapConstructor()
 
-        objectMap = self.mapNeighbors()
+        objectMap, robots, boxes, goals = self.mapNeighbors()
 
+        '''print('Mapa')
+        print(objectMap)
+        print('Robots')
+        print(robots)
+        print('Cajas')
+        print(boxes)
+        print('Metas')
+        print(goals)'''
 
 
     def step(self) -> None:
         self.schedule.step()
         # Este permite actualizar los datos cada paso
         self.datacollector.collect(self)
-
 
     def mapConstructor(self):
         x = 0
@@ -88,31 +94,70 @@ class SokobanModel(Model):
                     self.schedule.add(box)
                 x = x + 1
 
-
     def mapNeighbors(self):
-        map = []
-        boxes = []
-        robots = []
-        metas = []
+        mapModel = []
+        robots, boxes, goals = [], [], []
         for i in range(self.width):
             for j in range(self.height):
-                for agent in self.grid[i, j]:#i=Column, j=Row
-                    if isinstance(agent, Box):
-                        agentData = ((i, j), agent.__class__.__name__)
-                        neighbors = self.grid.get_neighbors((i, j), False)
-                        neighborList = []
-                        for neighbor in neighbors:
-                            pos = neighbor.pos
-                            # L, D, U, R
-                            if i-1 == pos[0]:
-                                neighborList.append([pos, 'F', neighbor.__class__.__name__])
-                            elif j-1 == pos[1]:
-                                neighborList.append([pos, 'D', neighbor.__class__.__name__])
-                            elif j+1 == pos[1]:
-                                neighborList.append([pos, 'U', neighbor.__class__.__name__])
-                            elif i+1 == pos[0]:
-                                neighborList.append([pos, 'R', neighbor.__class__.__name__])
-                        map.append([agentData, neighborList])
+                # i=Column, j=Row
+                for agent in self.grid[i, j]:
+                    if not isinstance(agent, Wall):
+                        agentData, agentType = self.agentIdentify(agent)
+                        if agentType == 'R':
+                            robots.append(agentData)
+                        if agentType == 'B':
+                            boxes.append(agentData)
+                        if agentType == 'G':
+                            goals.append(agentData)
 
-        objectMap = createMapObject(map)
-        return objectMap
+                        neighbors = self.grid.get_neighbors(agentData[0], False)
+                        neighborList = self.neighborIdentify(neighbors, i, j)
+                        mapModel.append([agentData, neighborList])
+
+        objectMap = createMapObject(mapModel)
+        return objectMap, robots, boxes, goals
+
+    @staticmethod
+    def agentIdentify(agent):
+        agentType = ''
+        agentData = ()
+        agentPos = agent.pos
+        agentName = agent.__class__.__name__
+        code = 0
+
+        if isinstance(agent, Robot):
+            code = agent.code
+            agentType = 'R'
+        elif isinstance(agent, Box):
+            code = agent.code
+            agentType = 'B'
+        elif isinstance(agent, Goal):
+            agentType = 'G'
+        agentData = (agentPos, agentName, code)
+
+        return agentData, agentType
+
+    @staticmethod
+    def neighborIdentify(neighbors, i, j):
+        neighborList = []
+        for neighbor in neighbors:
+            neighborPos = neighbor.pos
+            neighborName = neighbor.__class__.__name__
+            code = 0
+
+            if isinstance(neighbor, Box):
+                code = neighbor.code
+            elif isinstance(neighbor, Robot):
+                code = neighbor.code
+
+            # L, D, U, R
+            if i - 1 == neighborPos[0]:
+                neighborList.append([neighborPos, 'F', neighborName, code])
+            elif j - 1 == neighborPos[1]:
+                neighborList.append([neighborPos, 'D', neighborName, code])
+            elif j + 1 == neighborPos[1]:
+                neighborList.append([neighborPos, 'U', neighborName, code])
+            elif i + 1 == neighborPos[0]:
+                neighborList.append([neighborPos, 'R', neighborName, code])
+
+        return neighborList
