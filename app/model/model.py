@@ -4,6 +4,7 @@ from app.agents.road import Road
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.uninformed.breadth import Breadth
 from app.behaviors.routes.uninformed.depth import Depth
+from app.behaviors.routes.uninformed.uniformCost import UniformCost
 from app.file.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
@@ -34,7 +35,7 @@ class SokobanModel(Model):
         objectMap, robots, boxes, goals = self.mapNeighbors()
 
         priority = Priority('R', 'D', 'L', 'U')
-        route = Breadth(objectMap, robots[0], goals[0], priority)
+        route = Depth(objectMap, robots[0], goals[0], priority)
 
         search = route.search()
         print(search)
