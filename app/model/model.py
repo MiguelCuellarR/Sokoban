@@ -1,6 +1,8 @@
 import mesa
 from app.agents.box import Box
 from app.agents.road import Road
+from app.behaviors.heuristics.euclidian import Euclidian
+from app.behaviors.heuristics.manhattan import Manhattan
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.uninformed.breadth import Breadth
 from app.behaviors.routes.uninformed.depth import Depth
@@ -14,7 +16,7 @@ from mesa.time import RandomActivation
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 from mesa import Model
-from app.generalFunctions.generalFunction import createMapObject
+from app.generalFunctions.generalFunction import createObject
 
 
 class SokobanModel(Model):
@@ -32,15 +34,17 @@ class SokobanModel(Model):
         )
         self.mapConstructor()
 
-        objectMap, robots, boxes, goals = self.mapNeighbors()
+        objectMap, robots, boxes, goals, ways = self.mapNeighbors()
 
-        priority = Priority('R', 'D', 'L', 'U')
+        heuristic = Euclidian(ways, goals)
+        objHeuristic = heuristic.calculate()
+        '''priority = Priority('R', 'D', 'L', 'U')
         route = Depth(objectMap, robots[0], goals[0], priority)
 
         search = route.search()
         print(search)
         path = route.buildPath()
-        print(path)
+        print(path)'''
 
     def step(self) -> None:
         self.schedule.step()
@@ -98,26 +102,29 @@ class SokobanModel(Model):
 
     def mapNeighbors(self):
         mapModel = []
-        robots, boxes, goals = [], [], []
+        robots, boxes, goals, ways = [], [], [], []
         for i in range(self.width):
             for j in range(self.height):
                 # i=Column, j=Row
                 for agent in self.grid[i, j]:
                     if not isinstance(agent, Wall):
                         agentData, agentType = self.agentIdentify(agent)
-                        if agentType == 'R':
+                        if agentType == 'W':
+                            ways.append(agentData)
+                        elif agentType == 'R':
                             robots.append(agentData)
-                        if agentType == 'B':
+                        elif agentType == 'B':
                             boxes.append(agentData)
-                        if agentType == 'G':
+                        elif agentType == 'G':
                             goals.append(agentData)
+
 
                         neighbors = self.grid.get_neighbors(agentData[0], False)
                         neighborList = self.neighborIdentify(neighbors, i, j)
                         mapModel.append([agentData, neighborList])
 
-        objectMap = createMapObject(mapModel)
-        return objectMap, robots, boxes, goals
+        objectMap = createObject(mapModel)
+        return objectMap, robots, boxes, goals, ways
 
     @staticmethod
     def agentIdentify(agent):
@@ -135,6 +142,8 @@ class SokobanModel(Model):
             agentType = 'B'
         elif isinstance(agent, Goal):
             agentType = 'G'
+        elif isinstance(agent, Road):
+            agentType = 'W'#Way
         agentData = (agentPos, agentName, code)
 
         return agentData, agentType
