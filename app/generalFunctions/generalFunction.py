@@ -1,9 +1,9 @@
 from app.agents.wall import Wall
 
 
-def createMapObject(mapModel):
+def createObject(mapList):
     objectMap = {}
-    for position in mapModel:
+    for position in mapList:
         objectMap[position[0]] = position[1]
 
     return objectMap
