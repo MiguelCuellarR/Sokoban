@@ -1,6 +1,8 @@
 import mesa
 from app.agents.box import Box
 from app.agents.road import Road
+from app.behaviors.priority.priority import Priority
+from app.behaviors.routes.uninformed.depth import Depth
 from app.file.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
@@ -30,15 +32,13 @@ class SokobanModel(Model):
 
         objectMap, robots, boxes, goals = self.mapNeighbors()
 
-        '''print('Mapa')
-        print(objectMap)
-        print('Robots')
-        print(robots)
-        print('Cajas')
-        print(boxes)
-        print('Metas')
-        print(goals)'''
+        priority = Priority()
+        route = Depth(objectMap, robots[0], goals[0], priority)
 
+        search = route.search()
+        print(search)
+        path = route.buildPath()
+        print(path)
 
     def step(self) -> None:
         self.schedule.step()
@@ -152,7 +152,7 @@ class SokobanModel(Model):
 
             # L, D, U, R
             if i - 1 == neighborPos[0]:
-                neighborList.append([neighborPos, 'F', neighborName, code])
+                neighborList.append([neighborPos, 'L', neighborName, code])
             elif j - 1 == neighborPos[1]:
                 neighborList.append([neighborPos, 'D', neighborName, code])
             elif j + 1 == neighborPos[1]:
