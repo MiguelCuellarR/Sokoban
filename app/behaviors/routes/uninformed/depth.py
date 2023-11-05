@@ -40,14 +40,10 @@ class Depth(Route):
 
 
     def buildPath(self):
-        auxRoad = []
         end = self.destiny[0]
         for step in reversed(self.auxList):
             if end == step[1]:
-                auxRoad.append(end)
+                self.road.insert(0, end)
                 end = step[0]
-
-        for step in reversed(auxRoad):
-            self.road.append(step)
 
         return self.road
