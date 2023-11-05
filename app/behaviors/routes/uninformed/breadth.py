@@ -3,41 +3,36 @@ from collections import deque
 from app.behaviors.routes.route import Route
 
 
-class Depth(Route):
+class Breadth(Route):
     def __init__(self, graph, root, destiny, priority):
         super().__init__(graph, root, destiny, priority)
-        self.stack = deque()
+        self.queue = deque()
 
     def search(self):
-        self.stack.append(self.root)
-        previousPos = ()
-        while self.stack:
-            vertex = self.stack.pop()
+        self.queue.append(self.root)
+        while self.queue:
+            vertex = self.queue.popleft()
             posV = vertex[0]
             typeV = vertex[1]
             codeV = vertex[2]
 
             if vertex == self.destiny:
-                self.auxList.append([previousPos, posV])
                 break
 
             if vertex not in self.visited:
                 self.visited.add(posV)
-                if previousPos != ():
-                    self.auxList.append([previousPos, posV])
-                previousPos = posV
-
                 adjList = self.graph[vertex]
+
                 order = self.priority.priorityOrder(adjList)
-                for prio in reversed(order):
+                for prio in order:
                     posN = prio[0]
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        self.stack.append((posN, typeN, codeN))
+                        self.queue.append((posN, typeN, codeN))
+                        self.auxList.append([posV, posN])
 
         return self.auxList
-
 
     def buildPath(self):
         auxRoad = []
