@@ -5,6 +5,7 @@ from app.behaviors.heuristics.euclidian import Euclidian
 from app.behaviors.heuristics.manhattan import Manhattan
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.informed.aStar import AStar
+from app.behaviors.routes.informed.climbHill import ClimbHill
 from app.behaviors.routes.uninformed.breadth import Breadth
 from app.behaviors.routes.uninformed.depth import Depth
 from app.behaviors.routes.uninformed.uniformCost import UniformCost
@@ -36,18 +37,24 @@ class SokobanModel(Model):
         )
         self.mapConstructor()
 
-        '''objectMap, robots, boxes, goals, ways = self.mapNeighbors()
+        objectMap, robots, boxes, goals, ways = self.mapNeighbors()
 
         heuristic = Manhattan(ways, goals)
         objHeuristic = heuristic.calculate()
 
-        priority = Priority('R', 'D', 'L', 'U')
-        route = AStar(objectMap, robots[0], goals[0], priority, objHeuristic)
+        priority = Priority()   
+        route = UniformCost(objectMap, robots[0], goals[0], priority)
+        route2 = UniformCost(objectMap, robots[0], goals[1], priority)
 
         search = route.search()
+        search2 = route2.search()
         print(search)
+        print(search2)
         path = route.buildPath()
-        print(path)'''
+        path2 = route2.buildPath()
+        print('')
+        print(path)
+        print(path2)
 
     def step(self) -> None:
         self.schedule.step()

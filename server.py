@@ -13,8 +13,8 @@ file = File()
 world = file.uploadMap()
 COLUMNS = len(world[0])
 ROWS = len(world)
-SIZE_OF_CANVAS_IN_PIXELS_X = 800
-SIZE_OF_CANVAS_IN_PIXELS_Y = 800
+SIZE_OF_CANVAS_IN_PIXELS_X = 500
+SIZE_OF_CANVAS_IN_PIXELS_Y = 500
 
 simulation_params = {
     "agentsAmount": mesa.visualization.Slider(name='Number of Agents', value=2, min_value=1, max_value=200, step=1,

@@ -27,25 +27,26 @@ class AStar(Route):
                 break
 
             auxHeuristics = vertex[0]
+
             for auxHeu in auxHeuristics:
                 valueH = auxHeu[0]
                 posH = auxHeu[1]
 
-                if (posV, posH) not in self.visited:
-                    self.visited.add((posV, posH))
-                    adjList = self.graph[grid]
-                    order = self.priority.priorityOrder(adjList)
+                if self.destiny[0] == posH:
+                    if posV not in self.visited:
+                        self.visited.add(posV)
+                        adjList = self.graph[grid]
+                        order = self.priority.priorityOrder(adjList)
 
-                    for prio in order:
-                        posN = prio[0]
-                        typeN = prio[2]
-                        codeN = prio[3]
-                        if posN not in self.visited:
-                            routeSum = routeSum + valueStep
-                            f = valueH + routeSum
-
-                            self.queue.put(([(f, posH)], [routeSum, (posN, typeN, codeN), posV]))
-                            self.auxList.append([previousV, posV, posN, round(f, 2)])
+                        for prio in order:
+                            posN = prio[0]
+                            typeN = prio[2]
+                            codeN = prio[3]
+                            if posN not in self.visited:
+                                routeSum = routeSum + valueStep
+                                f = valueH + routeSum
+                                self.queue.put(([(f, posH)], [routeSum, (posN, typeN, codeN), posV]))
+                                self.auxList.append([previousV, posV, posN, round(f, 2)])
 
         return self.auxList
 
