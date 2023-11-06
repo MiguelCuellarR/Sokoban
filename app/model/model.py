@@ -9,7 +9,7 @@ from app.behaviors.routes.informed.climbHill import ClimbHill
 from app.behaviors.routes.uninformed.breadth import Breadth
 from app.behaviors.routes.uninformed.depth import Depth
 from app.behaviors.routes.uninformed.uniformCost import UniformCost
-from app.File.file import File
+from app.file.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
 from app.agents.robot import Robot

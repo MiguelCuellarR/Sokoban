@@ -10,7 +10,7 @@ from app.agents.wall import Wall
 from app.agents.expansionOrder import ExpansionOrder
 
 routes = ["AStar", "ClimbHill", "Breadth", "Depth", "UniformCost"]
-heuristics = ["Euclidian", "Manhanttan"]
+heuristics = ["Euclidian", "Manhattan"]
 file = File()
 world = file.uploadMap()
 COLUMNS = len(world[0])
@@ -19,7 +19,7 @@ SIZE_OF_CANVAS_IN_PIXELS_X = 500
 SIZE_OF_CANVAS_IN_PIXELS_Y = 500
 
 simulation_params = {
-    "routes": mesa.visualization.Choice(name="Selected Route",value="AStar", choices=routes),
+    "routes": mesa.visualization.Choice(name="Selected Route", value="AStar", choices=routes),
     "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value="Euclidian", choices=heuristics),
     "width": COLUMNS,
     "height": ROWS
