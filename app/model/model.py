@@ -22,7 +22,8 @@ from app.generalFunctions.generalFunction import createObject
 
 class SokobanModel(Model):
     def __init__(self, agentsAmount, width, height):
-        self.world = File.uploadMap(self=None)
+        file = File()
+        self.world = file.uploadMap()
         self.agentsAmount = agentsAmount
         self.width = len(self.world[0])
         self.height = len(self.world)
@@ -35,9 +36,9 @@ class SokobanModel(Model):
         )
         self.mapConstructor()
 
-        objectMap, robots, boxes, goals, ways = self.mapNeighbors()
+        '''objectMap, robots, boxes, goals, ways = self.mapNeighbors()
 
-        '''heuristic = Manhattan(ways, goals)
+        heuristic = Manhattan(ways, goals)
         objHeuristic = heuristic.calculate()
 
         priority = Priority('R', 'D', 'L', 'U')

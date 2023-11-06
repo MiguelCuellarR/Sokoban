@@ -1,0 +1,7 @@
+R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 
+R, 	R, 	R, 	R, 	C, 	C, 	C, 	C, 	C, 	C, 	C, 	R, 	C, 	C, 	R, 
+R, 	C, 	C-a-1, 	C, 	C, 	R, 	C, 	R, 	R, 	C, 	C, 	R, 	M, 	C, 	R, 
+R, 	R, 	C, 	C, 	C, 	R, 	C, 	C, 	C, 	C, 	C, 	R, 	R, 	C, 	R, 
+R, 	C, 	R, 	C, 	C, 	R, 	C, 	R, 	R, 	C, 	R, 	R, 	C, 	C, 	R, 
+R, 	C, 	C-b-1, 	C, 	C, 	C, 	C, 	C, 	C, 	C, 	C, 	C, 	C, 	C, 	R, 
+R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 	R, 
