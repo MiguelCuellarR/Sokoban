@@ -2,14 +2,19 @@ class File:
 
     def uploadMap(self) -> list[list[str]]:
         map_data = []
-        with open('resources/worlds/world2.txt') as txt_file:
+        with open('resources/worlds/world3.txt') as txt_file:
             for line in txt_file:
                 char = line.strip().replace(',', '').replace('\t', '')
                 char = char.split()
                 map_data.append(char)
-        return map_data
+
+        map_data = reversed(map_data)
+
+        map_model = []
+        for model in map_data:
+            map_model.append(model)
+
+        return map_model
 
     def saveMap(self) -> str:
         pass
-
-File.uploadMap(self=None)
