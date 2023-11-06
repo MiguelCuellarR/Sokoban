@@ -11,9 +11,18 @@ class Route(ABC):
         self.auxList = []
         self.road = []
         self.heuristic = heuristic
+        self.previousPos = ()
 
     def search(self):
         pass
 
     def buildPath(self):
-        pass
+        end = self.destiny[0]
+        prev = self.previousPos
+        for step in reversed(self.auxList):
+            if end == step[2] and prev == step[1]:
+                self.road.insert(0, step[2])
+                end = step[1]
+                prev = step[0]
+
+        return self.road
