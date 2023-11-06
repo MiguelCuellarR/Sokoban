@@ -1,7 +1,7 @@
 import mesa
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
-from app.File.file import File
+from app.file.file import File
 from app.agents.box import Box
 from app.agents.goal import Goal
 from app.agents.robot import Robot
