@@ -1,6 +1,8 @@
 from queue import PriorityQueue
 
 from app.behaviors.routes.route import Route
+from resources.constants import valueStep
+
 
 class UniformCost(Route):
     def __init__(self, graph, root, destiny, priority):
@@ -33,7 +35,7 @@ class UniformCost(Route):
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        summation = routeSum + 1
+                        summation = routeSum + valueStep
                         self.queue.put((summation, (posN, typeN, codeN), posV))
                         self.auxList.append([previousV, posV, posN, summation])
 

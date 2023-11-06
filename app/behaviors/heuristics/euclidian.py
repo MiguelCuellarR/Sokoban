@@ -22,4 +22,4 @@ class Euclidian(Heuristic):
             heuristicList.append([way[0], values])
 
         self.objHeuristic = createObject(heuristicList)
-        print(self.objHeuristic)
+        return self.objHeuristic

@@ -4,6 +4,7 @@ from app.agents.road import Road
 from app.behaviors.heuristics.euclidian import Euclidian
 from app.behaviors.heuristics.manhattan import Manhattan
 from app.behaviors.priority.priority import Priority
+from app.behaviors.routes.informed.aStar import AStar
 from app.behaviors.routes.uninformed.breadth import Breadth
 from app.behaviors.routes.uninformed.depth import Depth
 from app.behaviors.routes.uninformed.uniformCost import UniformCost
@@ -36,10 +37,11 @@ class SokobanModel(Model):
 
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
 
-        heuristic = Euclidian(ways, goals)
+        '''heuristic = Manhattan(ways, goals)
         objHeuristic = heuristic.calculate()
-        '''priority = Priority('R', 'D', 'L', 'U')
-        route = Depth(objectMap, robots[0], goals[0], priority)
+
+        priority = Priority('R', 'D', 'L', 'U')
+        route = AStar(objectMap, robots[0], goals[0], priority, objHeuristic)
 
         search = route.search()
         print(search)
