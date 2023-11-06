@@ -8,7 +8,7 @@ from app.behaviors.routes.informed.aStar import AStar
 from app.behaviors.routes.uninformed.breadth import Breadth
 from app.behaviors.routes.uninformed.depth import Depth
 from app.behaviors.routes.uninformed.uniformCost import UniformCost
-from app.file.file import File
+from app.File.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
 from app.agents.robot import Robot
@@ -21,10 +21,11 @@ from app.generalFunctions.generalFunction import createObject
 
 
 class SokobanModel(Model):
-    def __init__(self, agentsAmount, width, height):
+    def __init__(self, routes, heuristics, width, height):
         file = File()
         self.world = file.uploadMap()
-        self.agentsAmount = agentsAmount
+        self.heuristics = heuristics
+        self.routes = routes
         self.width = len(self.world[0])
         self.height = len(self.world)
         self.grid = MultiGrid(width, height, True)
@@ -87,7 +88,7 @@ class SokobanModel(Model):
                     self.schedule.add(road)
 
                     x = x + 1
-                    robot = Robot(x, self, field[len(field)-1])
+                    robot = Robot(x, self, field[len(field) - 1])
                     self.grid.place_agent(robot, (i, j))
                     self.schedule.add(robot)
 
@@ -98,7 +99,7 @@ class SokobanModel(Model):
                     self.schedule.add(road)
 
                     x = x + 1
-                    box = Box(x, self, field[len(field)-1])
+                    box = Box(x, self, field[len(field) - 1])
                     self.grid.place_agent(box, (i, j))
                     self.schedule.add(box)
                 x = x + 1
@@ -120,7 +121,6 @@ class SokobanModel(Model):
                             boxes.append(agentData)
                         elif agentType == 'G':
                             goals.append(agentData)
-
 
                         neighbors = self.grid.get_neighbors(agentData[0], False)
                         neighborList = self.neighborIdentify(neighbors, i, j)
@@ -146,7 +146,7 @@ class SokobanModel(Model):
         elif isinstance(agent, Goal):
             agentType = 'G'
         elif isinstance(agent, Road):
-            agentType = 'W'#Way
+            agentType = 'W'  # Way
         agentData = (agentPos, agentName, code)
 
         return agentData, agentType

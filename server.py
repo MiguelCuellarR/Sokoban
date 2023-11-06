@@ -1,7 +1,7 @@
 import mesa
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
-from app.file.file import File
+from app.File.file import File
 from app.agents.box import Box
 from app.agents.goal import Goal
 from app.agents.robot import Robot
@@ -9,6 +9,8 @@ from app.model.model import SokobanModel
 from app.agents.wall import Wall
 from app.agents.expansionOrder import ExpansionOrder
 
+routes = ["AStar", "ClimbHill", "Breadth", "Depth", "UniformCost"]
+heuristics = ["Euclidian", "Manhanttan"]
 file = File()
 world = file.uploadMap()
 COLUMNS = len(world[0])
@@ -17,8 +19,8 @@ SIZE_OF_CANVAS_IN_PIXELS_X = 800
 SIZE_OF_CANVAS_IN_PIXELS_Y = 800
 
 simulation_params = {
-    "agentsAmount": mesa.visualization.Slider(name='Number of Agents', value=2, min_value=1, max_value=200, step=1,
-                                              description="seleccionar numero de agentes"),
+    "routes": mesa.visualization.Choice(name="Selected Route",value="AStar", choices=routes),
+    "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value="Euclidian", choices=heuristics),
     "width": COLUMNS,
     "height": ROWS
 }
@@ -51,6 +53,7 @@ chart_currents = ChartModule(
     data_collector_name="datacollector"
 )
 
-server = ModularServer(SokobanModel, [grid, chart_currents], "Sokoban", model_params=simulation_params)
+server = ModularServer(SokobanModel, [grid, chart_currents], "Sokoban",
+                       model_params=simulation_params)
 server.port = 8521
 server.launch()
