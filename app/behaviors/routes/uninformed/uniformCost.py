@@ -33,7 +33,6 @@ class UniformCost(Route):
                 typeN = prio[2]
                 codeN = prio[3]
                 if posN not in self.visited:
-                    print(posV, '      ', order, '       ', posN)
                     self.visited.add(posN)
                     summation = routeSum + valueStep
                     self.queue.put((summation + i, (posN, typeN, codeN), posV))
