@@ -40,21 +40,21 @@ class SokobanModel(Model):
 
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
 
-        heuristic = Manhattan(ways, goals)
-        objHeuristic = heuristic.calculate()
+        #heuristic = Manhattan(ways, goals)
+        #objHeuristic = heuristic.calculate()
 
         priority = Priority()   
-        route = UniformCost(objectMap, robots[0], goals[0], priority)
-        route2 = UniformCost(objectMap, robots[0], goals[1], priority)
+        route = Breadth(objectMap, robots[0], goals[0], priority)
+        route2 = Breadth(objectMap, robots[0], goals[1], priority)
 
         search = route.search()
-        search2 = route2.search()
-        print(search)
-        print(search2)
         path = route.buildPath()
-        path2 = route2.buildPath()
-        print('')
+        print(search)
         print(path)
+        print('---------------------')
+        search2 = route2.search()
+        path2 = route2.buildPath()
+        print(search2)
         print(path2)
 
     def step(self) -> None:
