@@ -44,8 +44,8 @@ class SokobanModel(Model):
         #objHeuristic = heuristic.calculate()
 
         priority = Priority()   
-        route = Breadth(objectMap, robots[0], goals[0], priority)
-        route2 = Breadth(objectMap, robots[0], goals[1], priority)
+        route = UniformCost(objectMap, robots[0], goals[0], priority)
+        route2 = UniformCost(objectMap, robots[0], goals[1], priority)
 
         search = route.search()
         path = route.buildPath()
