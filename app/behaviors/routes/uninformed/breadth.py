@@ -19,8 +19,6 @@ class Breadth(Route):
             codeV = vertex[0][2]
             previousV = vertex[1]
 
-            print(vertex[0], '     ', self.destiny)
-
             if vertex[0] == self.destiny:
                 self.previousPos = previousV
                 break
@@ -34,6 +32,8 @@ class Breadth(Route):
                 if posN not in self.visited:
                     self.visited.add(posN)
                     self.queue.append(((posN, typeN, codeN), posV))
-                    self.auxList.append([previousV, posV, posN])
+                    self.auxList.append([posN, posV, previousV])
 
         return self.auxList
+
+

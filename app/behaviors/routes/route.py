@@ -20,9 +20,9 @@ class Route(ABC):
         end = self.destiny[0]
         prev = self.previousPos
         for step in reversed(self.auxList):
-            if end == step[2] and prev == step[1]:
-                self.road.insert(0, step[2])
+            if end == step[0] and prev == step[1]:
+                self.road.insert(0, step[0])
                 end = step[1]
-                prev = step[0]
+                prev = step[2]
 
         return self.road
