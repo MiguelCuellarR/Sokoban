@@ -21,11 +21,12 @@ from app.generalFunctions.generalFunction import createObject
 
 
 class SokobanModel(Model):
-    def __init__(self, routes, heuristics, width, height):
+    def __init__(self, routes, heuristics, priority1, width, height):
         file = File()
         self.world = file.uploadMap()
         self.heuristics = heuristics
         self.routes = routes
+        self.priority1 = priority1
         self.width = len(self.world[0])
         self.height = len(self.world)
         self.grid = MultiGrid(width, height, True)
