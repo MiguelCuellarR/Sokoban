@@ -20,12 +20,12 @@ class Depth(Route):
             previousV = vertex[1]
 
             if vertData == self.destiny:
-                self.auxList.append([posV, previousV, ()])
+                self.auxList.append([posV, previousV])
                 break
 
             if posV not in self.visited:
                 self.visited.add(posV)
-                self.auxList.append([posV, previousV, ()])
+                self.auxList.append([posV, previousV])
                 adjList = self.graph[vertData]
                 order = self.priority.priorityOrder(adjList)
                 for prio in reversed(order):
