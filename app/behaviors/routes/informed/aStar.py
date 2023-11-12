@@ -55,9 +55,7 @@ class AStar(Route):
                                 valueH = heuN[0]
                                 summation = routeSum + valueStep
                                 f = summation + valueH
-        #                        print(previousV, '        ', posV, '       ', posN, '       ', movN, '      ', f + i)
                                 self.queue.put((f+i, auxH, [summation, (posN, typeN, codeN), posV]))
-        #print('--------------------')
         return self.auxList
 
     def buildPath(self):

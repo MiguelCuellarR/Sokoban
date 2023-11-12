@@ -5,6 +5,7 @@ from app.behaviors.heuristics.euclidian import Euclidian
 from app.behaviors.heuristics.manhattan import Manhattan
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.informed.aStar import AStar
+from app.behaviors.routes.informed.beam import Beam
 from app.behaviors.routes.informed.climbHill import ClimbHill
 from app.behaviors.routes.uninformed.breadth import Breadth
 from app.behaviors.routes.uninformed.depth import Depth
@@ -44,8 +45,8 @@ class SokobanModel(Model):
         objHeuristic = heuristic.calculate()
 
         priority = Priority()   
-        route = ClimbHill(objectMap, robots[0], goals[0], priority, objHeuristic)
-        route2 = ClimbHill(objectMap, robots[0], goals[1], priority, objHeuristic)
+        route = Beam(objectMap, robots[0], goals[0], priority, objHeuristic)
+        route2 = Beam(objectMap, robots[0], goals[1], priority, objHeuristic)
 
         search = route.search()
         path = route.buildPath()

@@ -26,7 +26,6 @@ class ClimbHill(Route):
                 break
 
             if posV not in self.visited:
-                #print('heu: {}, pos: {}, prev: {}'.format(heuristicV, posV, previousV))
                 queue = PriorityQueue()
                 auxEdgeList = []
                 self.visited.add(posV)
