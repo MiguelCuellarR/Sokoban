@@ -57,12 +57,3 @@ class AStar(Route):
                                 f = summation + valueH
                                 self.queue.put((f+i, auxH, [summation, (posN, typeN, codeN), posV]))
         return self.auxList
-
-    def buildPath(self):
-        end = self.destiny[0]
-        for step in reversed(self.auxList):
-            if end == step[0] and end != self.root[0]:
-                self.road.insert(0, step[0])
-                end = step[1]
-
-        return self.road

@@ -11,5 +11,6 @@ class HeuristicFactory:
             heuristic = Euclidian(ways, goals)
         elif typeRoute == "Manhattan":
             heuristic = Manhattan(ways, goals)
-
+        else:
+            return {}
         return heuristic.calculate()

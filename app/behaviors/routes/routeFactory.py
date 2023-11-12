@@ -23,6 +23,8 @@ class RouteFactory:
             route = ClimbHill(graph, root, destiny, priority, heuristic)
         elif typeRoute == "Beam":
             route = Beam(graph, root, destiny, priority, heuristic)
+        else:
+            return [], []
 
         expansionOrder = route.search()
         road = route.buildPath()
