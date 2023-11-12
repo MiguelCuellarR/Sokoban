@@ -9,41 +9,41 @@ class Depth(Route):
         self.stack = deque()
 
     def search(self):
-        self.stack.append(self.root)
-        previousPos = ()
+        self.stack.append((self.root, ()))
+
         while self.stack:
             vertex = self.stack.pop()
-            posV = vertex[0]
-            typeV = vertex[1]
-            codeV = vertex[2]
+            vertData = vertex[0]
+            posV = vertData[0]
+            typeV = vertData[1]
+            codeV = vertData[2]
+            previousV = vertex[1]
 
-            if vertex == self.destiny:
-                self.auxList.append([previousPos, posV])
+            if vertData == self.destiny:
+                self.auxList.append([posV, previousV, ()])
                 break
 
-            if vertex not in self.visited:
+            if posV not in self.visited:
                 self.visited.add(posV)
-                if previousPos != ():
-                    self.auxList.append([previousPos, posV])
-                previousPos = posV
-
-                adjList = self.graph[vertex]
+                self.auxList.append([posV, previousV, ()])
+                adjList = self.graph[vertData]
                 order = self.priority.priorityOrder(adjList)
                 for prio in reversed(order):
                     posN = prio[0]
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        self.stack.append((posN, typeN, codeN))
+                        self.stack.append(((posN, typeN, codeN), posV))
 
         return self.auxList
-
 
     def buildPath(self):
         end = self.destiny[0]
         for step in reversed(self.auxList):
-            if end == step[1]:
-                self.road.insert(0, end)
-                end = step[0]
+            if end == step[0] and end != self.root[0]:
+                self.road.insert(0, step[0])
+                end = step[1]
 
         return self.road
+
+

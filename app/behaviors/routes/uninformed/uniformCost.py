@@ -11,43 +11,45 @@ class UniformCost(Route):
         self.previousPos = ()
 
     def search(self):
-        self.queue.put((0, self.root, ()))
-
+        self.queue.put((0.0, self.root, ()))
+        i = 0.00
         while self.queue:
             vertex = self.queue.get()
             routeSum = vertex[0]
-            posV = vertex[1][0]
-            typeV = vertex[1][1]
-            codeV = vertex[1][2]
+            vertData = vertex[1]
+            posV = vertData[0]
+            typeV = vertData[1]
+            codeV = vertData[2]
             previousV = vertex[2]
 
-            if vertex[1] == self.destiny:
-                self.previousPos = previousV
+            if vertData == self.destiny:
+                self.auxList.append([posV, previousV, (), int(routeSum)])
                 break
 
             if posV not in self.visited:
                 self.visited.add(posV)
-                adjList = self.graph[vertex[1]]
+                self.auxList.append([posV, previousV, (), int(routeSum)])
+                adjList = self.graph[vertData]
                 order = self.priority.priorityOrder(adjList)
-
+                j = 0.000
                 for prio in order:
                     posN = prio[0]
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
                         summation = routeSum + valueStep
-                        self.queue.put((summation, (posN, typeN, codeN), posV))
-                        self.auxList.append([previousV, posV, posN, summation])
+                        self.queue.put((summation + i + j, (posN, typeN, codeN), posV))
+                        j = j + 0.001
+
+                i = i + 0.01
 
         return self.auxList
 
     def buildPath(self):
         end = self.destiny[0]
-        prev = self.previousPos
         for step in reversed(self.auxList):
-            if end == step[2] and prev == step[1]:
-                self.road.insert(0, step[2])
+            if end == step[0] and end != self.root[0]:
+                self.road.insert(0, step[0])
                 end = step[1]
-                prev = step[0]
 
         return self.road
