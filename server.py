@@ -9,8 +9,8 @@ from app.model.model import SokobanModel
 from app.agents.wall import Wall
 from app.agents.expansionOrder import ExpansionOrder
 
-routes = ["AStar", "ClimbHill", "Breadth", "Depth", "UniformCost"]
-heuristics = ["Euclidian", "Manhattan"]
+routes = [" ", "AStar", "Beam", "ClimbHill", "Breadth", "Depth", "UniformCost"]
+heuristics = [" ", "Euclidian", "Manhattan"]
 file = File()
 world = file.uploadMap()
 COLUMNS = len(world[0])
@@ -19,8 +19,8 @@ SIZE_OF_CANVAS_IN_PIXELS_X = 500
 SIZE_OF_CANVAS_IN_PIXELS_Y = 500
 
 simulation_params = {
-    "routes": mesa.visualization.Choice(name="Selected Route", value="AStar", choices=routes),
-    "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value="Euclidian", choices=heuristics),
+    "routes": mesa.visualization.Choice(name="Selected Route", value=" ", choices=routes),
+    "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value=" ", choices=heuristics),
     "width": COLUMNS,
     "height": ROWS
 }

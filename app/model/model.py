@@ -35,21 +35,13 @@ class SokobanModel(Model):
 
         heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
         priority = Priority()
-        expOrder, road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
-        print(expOrder)
-        print(road)
-        #route = Beam(objectMap, robots[0], goals[0], priority, objHeuristic)
-        #route2 = Beam(objectMap, robots[0], goals[1], priority, objHeuristic)
+        expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
+        print(expOrder1)
+        print(road1)
 
-        #search = route.search()
-        #path = route.buildPath()
-        #search2 = route2.search()
-        #path2 = route2.buildPath()
-        #print(search)
-        #print(path)
-        #sprint('---------------------')
-        #print(search2)
-        #print(path2)
+        '''expOrder2, road2 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
+        print(expOrder2)
+        print(road2)'''
 
     def step(self) -> None:
         self.schedule.step()
