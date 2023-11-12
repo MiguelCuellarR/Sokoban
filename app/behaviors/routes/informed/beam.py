@@ -74,4 +74,3 @@ class Beam(Route):
                 end = step[1]
 
         return self.road
-    
