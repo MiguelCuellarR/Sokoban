@@ -23,12 +23,12 @@ class UniformCost(Route):
             previousV = vertex[2]
 
             if vertData == self.destiny:
-                self.auxList.append([posV, previousV, (), int(routeSum)])
+                self.auxList.append([posV, previousV, int(routeSum)])
                 break
 
             if posV not in self.visited:
                 self.visited.add(posV)
-                self.auxList.append([posV, previousV, (), int(routeSum)])
+                self.auxList.append([posV, previousV, int(routeSum)])
                 adjList = self.graph[vertData]
                 order = self.priority.priorityOrder(adjList)
                 j = 0.000
