@@ -3,6 +3,7 @@ from mesa import Model
 from mesa.space import MultiGrid
 from mesa.time import RandomActivation
 from app.agents.box import Box
+from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
 from app.agents.road import Road
 from app.agents.robot import Robot
@@ -36,8 +37,9 @@ class SokobanModel(Model):
         heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
         priority = Priority()
         expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
-        print(expOrder1)
-        print(road1)
+
+        self.expansionOrder = expOrder1
+        self.road = road1
 
         '''expOrder2, road2 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
         print(expOrder2)
@@ -45,8 +47,16 @@ class SokobanModel(Model):
 
     def step(self) -> None:
         self.schedule.step()
-        # Este permite actualizar los datos cada paso
-        self.datacollector.collect(self)
+        currentStep = self.schedule.steps
+        if currentStep < len(self.expansionOrder):
+            move = self.expansionOrder[currentStep]
+            nextPos = move[0]
+            imagePath = "resources/numbers/" + str(currentStep) + ".png"
+            expOrd = ExpansionOrder(currentStep + 1000, self, imagePath)
+            self.grid.place_agent(expOrd, nextPos)
+            self.schedule.add(expOrd)
+
+        #self.datacollector.collect(self)
 
     def mapConstructor(self):
         x = 0
