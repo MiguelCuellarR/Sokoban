@@ -55,16 +55,5 @@ class AStar(Route):
                                 valueH = heuN[0]
                                 summation = routeSum + valueStep
                                 f = summation + valueH
-        #                        print(previousV, '        ', posV, '       ', posN, '       ', movN, '      ', f + i)
                                 self.queue.put((f+i, auxH, [summation, (posN, typeN, codeN), posV]))
-        #print('--------------------')
         return self.auxList
-
-    def buildPath(self):
-        end = self.destiny[0]
-        for step in reversed(self.auxList):
-            if end == step[0] and end != self.root[0]:
-                self.road.insert(0, step[0])
-                end = step[1]
-
-        return self.road

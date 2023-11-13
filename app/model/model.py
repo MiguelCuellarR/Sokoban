@@ -1,4 +1,7 @@
 import mesa
+from mesa import Model
+from mesa.space import MultiGrid
+from mesa.time import RandomActivation
 from app.agents.box import Box
 from app.agents.road import Road
 from app.behaviors.heuristics.euclidian import Euclidian
@@ -12,12 +15,13 @@ from app.behaviors.routes.uninformed.uniformCost import UniformCost
 from app.File.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
+from app.agents.road import Road
 from app.agents.robot import Robot
 from app.agents.wall import Wall
-from mesa.time import RandomActivation
-from mesa.space import MultiGrid
-from mesa.datacollection import DataCollector
-from mesa import Model
+from app.behaviors.heuristics.heuristicFactory import HeuristicFactory
+from app.behaviors.priority.priority import Priority
+from app.behaviors.routes.routeFactory import RouteFactory
+from app.File.file import File
 from app.generalFunctions.generalFunction import createObject
 
 
@@ -41,8 +45,9 @@ class SokobanModel(Model):
 
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
 
-        heuristic = Manhattan(ways, goals)
-        objHeuristic = heuristic.calculate()
+        heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
+        priority = Priority()
+        expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
 
         priority = Priority()
         route = UniformCost(objectMap, robots[0], goals[0], priority)
@@ -64,10 +69,25 @@ class SokobanModel(Model):
         print(search2)
         print(path2)
 
+        self.expansionOrder = expOrder1
+        self.road = road1
+
+        '''expOrder2, road2 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
+        print(expOrder2)
+        print(road2)'''
+
     def step(self) -> None:
         self.schedule.step()
-        # Este permite actualizar los datos cada paso
-        self.datacollector.collect(self)
+        currentStep = self.schedule.steps
+        if currentStep < len(self.expansionOrder):
+            move = self.expansionOrder[currentStep]
+            nextPos = move[0]
+            imagePath = "resources/numbers/" + str(currentStep) + ".png"
+            expOrd = ExpansionOrder(currentStep + 1000, self, imagePath)
+            self.grid.place_agent(expOrd, nextPos)
+            self.schedule.add(expOrd)
+
+        #self.datacollector.collect(self)
 
     def mapConstructor(self):
         x = 0
