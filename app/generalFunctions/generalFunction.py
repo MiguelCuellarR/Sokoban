@@ -1,4 +1,7 @@
-from app.agents.wall import Wall
+import os
+
+import cv2
+import numpy as np
 
 
 def createObject(mapList):
@@ -7,3 +10,21 @@ def createObject(mapList):
         objectMap[position[0]] = position[1]
 
     return objectMap
+
+
+def imagesPng():
+    dirPath = 'C:/Users/PERSONAL/Desktop/Semeste_X/Sistemas_Inteligentes_I/Sokoban/resources/numbers/'
+    for i in range(10, 101):
+        cad = str(i)
+        listDig = []
+        for j in range(0, len(cad)):
+            listDig.append(cad[j])
+        imgComp = cv2.imread(dirPath + listDig[0] + '.png', cv2.IMREAD_UNCHANGED)
+        for dig in listDig[1:]:
+            img = cv2.imread(dirPath + dig + '.png', cv2.IMREAD_UNCHANGED)
+            imgComp = cv2.hconcat((imgComp, img))
+        resize = cv2.resize(imgComp, (512, 512))
+        print(cad + '.png')
+        cv2.imwrite(dirPath + cad + '.png', resize)
+
+#imagesPng()

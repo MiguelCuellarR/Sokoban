@@ -31,29 +31,28 @@ def agent_portrayal(agent):
     if isinstance(agent, Wall):
         return {"Shape": "resources/icons/muro.png", "Layer": 0}
     elif isinstance(agent, ExpansionOrder):
-        return {"Shape": "rect", "w": 1, "h": 1, "Filled": True, "Color": "#DFC49C", "text": "1", "text_color": "Black",
-                "Layer": 2}
+        return {"Shape": agent.image, "Layer": 2}
     elif isinstance(agent, Robot):
-        return {"Shape": "resources/icons/robot.png", "Layer": 2}
+        return {"Shape": "resources/icons/robot.png", "Layer": 3}
     elif isinstance(agent, Goal):
         return {"Shape": "resources/icons/bandera.png", "Layer": 1}
     elif isinstance(agent, Box):
-        return {"Shape": "resources/icons/paquete.png", "Layer": 2}
+        return {"Shape": "resources/icons/paquete.png", "Layer": 3}
     return portrayal
 
 
-grid = CanvasGrid(agent_portrayal, COLUMNS, ROWS, SIZE_OF_CANVAS_IN_PIXELS_X,
-                  SIZE_OF_CANVAS_IN_PIXELS_Y)
+grid = CanvasGrid(agent_portrayal, COLUMNS, ROWS, SIZE_OF_CANVAS_IN_PIXELS_X, SIZE_OF_CANVAS_IN_PIXELS_Y)
 
-chart_currents = ChartModule(
+
+'''chart_currents = ChartModule(
     [
         {"Label": "Wealthy Agents", "Color": "", "label": "Poder", "backgroundColor": "Blue"},
         {"Label": "Non Wealthy Agents", "Color": "", "label": "No Poder", "backgroundColor": "Red"},
     ],
     data_collector_name="datacollector"
-)
-
-server = ModularServer(SokobanModel, [grid, chart_currents], "Sokoban",
+)'''
+# chart_currents
+server = ModularServer(SokobanModel, [grid], "Sokoban",
                        model_params=simulation_params)
 server.port = 8521
 server.launch()
