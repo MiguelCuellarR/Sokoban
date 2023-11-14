@@ -44,14 +44,21 @@ class SokobanModel(Model):
             priority = Priority()
 
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
-        heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
+        heuristic = {}
+        if ways and goals:
+            heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
 
-
-        expOrder, road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
-
-        #expOrder, road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
-        self.expansionOrder = expOrder
-        self.road = road
+        if objectMap and robots and goals and priority:
+            if self.routes in ['Depth', 'Breadth', 'UniformCost']:
+                print('here')
+                self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0],
+                                                                          priority, {})
+            else:
+                if heuristic:
+                    self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0],
+                                                                              goals[0], priority, heuristic)
+            #self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1],
+            # priority, heuristic)
 
     def step(self) -> None:
         self.schedule.step()
