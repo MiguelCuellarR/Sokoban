@@ -17,7 +17,7 @@ from app.generalFunctions.generalFunction import createObject
 
 
 class SokobanModel(Model):
-    def __init__(self, routes, heuristics, left, up, down, right, width, height):
+    def __init__(self, routes, heuristics, left, up, right, down, width, height):
         file = File()
         self.world = file.uploadMap()
         self.heuristics = heuristics
@@ -45,7 +45,10 @@ class SokobanModel(Model):
 
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
         heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
+
+
         expOrder, road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
+
         #expOrder, road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
         self.expansionOrder = expOrder
         self.road = road
