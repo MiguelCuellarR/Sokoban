@@ -15,16 +15,36 @@ file = File()
 world = file.uploadMap()
 COLUMNS = len(world[0])
 ROWS = len(world)
-SIZE_OF_CANVAS_IN_PIXELS_X = 500
-SIZE_OF_CANVAS_IN_PIXELS_Y = 500
+
+SIZE_OF_CANVAS_IN_PIXELS_X = 0
+SIZE_OF_CANVAS_IN_PIXELS_Y = 0
+if COLUMNS >= 7:
+    SIZE_OF_CANVAS_IN_PIXELS_X = 750
+else:
+    SIZE_OF_CANVAS_IN_PIXELS_X = 400
+
+if ROWS >= 5:
+    SIZE_OF_CANVAS_IN_PIXELS_Y = 455
+else:
+    SIZE_OF_CANVAS_IN_PIXELS_Y = 400
+
+
 
 simulation_params = {
     "routes": mesa.visualization.Choice(name="Selected Route", value=" ", choices=routes),
     "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value=" ", choices=heuristics),
+    "left": mesa.visualization.Slider(name='Left', value=0, min_value=0, max_value=4, step=1,
+                                      description="Select a priority for left movement"),
+    "up": mesa.visualization.Slider(name='Up', value=0, min_value=0, max_value=4, step=1,
+                                    description="Select a priority for up movement"),
+    "down": mesa.visualization.Slider(name='Down', value=0, min_value=0, max_value=4, step=1,
+                                      description="Select a priority for down movement"),
+    "right": mesa.visualization.Slider(name='Right', value=0, min_value=0, max_value=4, step=1,
+                                       description="Select a priority for right movement"),
+
     "width": COLUMNS,
     "height": ROWS
 }
-
 
 def agent_portrayal(agent):
     portrayal = {"Shape": "resources/icons/pavimentacion.png", "Layer": 0}
@@ -42,7 +62,6 @@ def agent_portrayal(agent):
 
 
 grid = CanvasGrid(agent_portrayal, COLUMNS, ROWS, SIZE_OF_CANVAS_IN_PIXELS_X, SIZE_OF_CANVAS_IN_PIXELS_Y)
-
 
 '''chart_currents = ChartModule(
     [
