@@ -37,11 +37,10 @@ simulation_params = {
                                       description="Select a priority for left movement"),
     "up": mesa.visualization.Slider(name='Up', value=0, min_value=0, max_value=4, step=1,
                                     description="Select a priority for up movement"),
-    "down": mesa.visualization.Slider(name='Down', value=0, min_value=0, max_value=4, step=1,
-                                      description="Select a priority for down movement"),
     "right": mesa.visualization.Slider(name='Right', value=0, min_value=0, max_value=4, step=1,
                                        description="Select a priority for right movement"),
-
+    "down": mesa.visualization.Slider(name='Down', value=0, min_value=0, max_value=4, step=1,
+                                      description="Select a priority for down movement"),
     "width": COLUMNS,
     "height": ROWS
 }
