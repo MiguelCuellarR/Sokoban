@@ -12,15 +12,20 @@ from app.behaviors.heuristics.heuristicFactory import HeuristicFactory
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.routeFactory import RouteFactory
 from app.file.file import File
+from app.generalFunctions import generalFunction
 from app.generalFunctions.generalFunction import createObject
 
 
 class SokobanModel(Model):
-    def __init__(self, routes, heuristics, width, height):
+    def __init__(self, routes, heuristics, left, up, down, right, width, height):
         file = File()
         self.world = file.uploadMap()
         self.heuristics = heuristics
         self.routes = routes
+        self.left = left
+        self.up = up
+        self.down = down
+        self.right = right
         self.width = len(self.world[0])
         self.height = len(self.world)
         self.grid = MultiGrid(width, height, True)
@@ -32,18 +37,18 @@ class SokobanModel(Model):
         )
         self.mapConstructor()
 
+        priority = generalFunction.getPriorities([['L', self.left], ['U', self.up], ['D', self.down], ['R', self.right]])
+        if priority[1] and priority[2] and priority[3] and priority[4]:
+            priority = Priority(priority[1][0], priority[2][0], priority[3][0], priority[4][0])
+        else:
+            priority = Priority()
+
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
-
         heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
-        priority = Priority()
-        expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
-
-        self.expansionOrder = expOrder1
-        self.road = road1
-
-        '''expOrder2, road2 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
-        print(expOrder2)
-        print(road2)'''
+        expOrder, road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
+        #expOrder, road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
+        self.expansionOrder = expOrder
+        self.road = road
 
     def step(self) -> None:
         self.schedule.step()
