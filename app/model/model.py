@@ -50,7 +50,6 @@ class SokobanModel(Model):
 
         if objectMap and robots and goals and priority:
             if self.routes in ['Depth', 'Breadth', 'UniformCost']:
-                print('here')
                 self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0],
                                                                           priority, {})
             else:
