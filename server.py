@@ -46,7 +46,7 @@ simulation_params = {
 }
 
 def agent_portrayal(agent):
-    portrayal = {"Shape": "resources/icons/pavimentacion.png", "Layer": 0}
+    portrayal = {"Shape": "resources/icons/ground1.png", "Layer": 0}
     if isinstance(agent, Wall):
         return {"Shape": "resources/icons/muro.png", "Layer": 0}
     elif isinstance(agent, ExpansionOrder):
@@ -56,7 +56,7 @@ def agent_portrayal(agent):
     elif isinstance(agent, Goal):
         return {"Shape": "resources/icons/bandera.png", "Layer": 1}
     elif isinstance(agent, Box):
-        return {"Shape": "resources/icons/paquete.png", "Layer": 3}
+        return {"Shape": "resources/icons/box.png", "Layer": 3}
     return portrayal
 
 
