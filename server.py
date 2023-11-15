@@ -7,6 +7,7 @@ from app.agents.goal import Goal
 from app.agents.robot import Robot
 from app.model.model import SokobanModel
 from app.agents.wall import Wall
+import tkinter as tk
 from app.agents.expansionOrder import ExpansionOrder
 
 routes = ["AStar", "ClimbHill", "Breadth", "Depth", "UniformCost"]
@@ -20,9 +21,10 @@ ROWS = len(world)
 SIZE_OF_CANVAS_IN_PIXELS_X = 500
 SIZE_OF_CANVAS_IN_PIXELS_Y = 500
 
+
 simulation_params = {
-    "priority1": mesa.visualization.Choice(name="Selected moves", value="Left", choices=moves),
     "routes": mesa.visualization.Choice(name="Selected Route", value=" ", choices=routes),
+    "priority1": mesa.visualization.Choice(name="Selected Route", value="", choices=moves),
     "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value=" ", choices=heuristics),
     "width": COLUMNS,
     "height": ROWS

@@ -3,6 +3,7 @@ from mesa import Model
 from mesa.space import MultiGrid
 from mesa.time import RandomActivation
 from app.agents.box import Box
+import tkinter as tk
 from app.agents.road import Road
 from app.behaviors.heuristics.euclidian import Euclidian
 from app.behaviors.heuristics.manhattan import Manhattan
@@ -25,8 +26,13 @@ from app.File.file import File
 from app.generalFunctions.generalFunction import createObject
 
 
+def on_button_click(entry):
+    input_text = entry.get()
+    print("Texto introducido:", input_text)
+
+
 class SokobanModel(Model):
-    def __init__(self, routes, heuristics, priority1, width, height):
+    def __init__(self, routes, priority1, heuristics, width, height):
         file = File()
         self.world = file.uploadMap()
         self.heuristics = heuristics
@@ -48,7 +54,7 @@ class SokobanModel(Model):
         heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
         priority = Priority()
         expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
-
+        print("r", self.heuristics)
         priority = Priority()
         route = UniformCost(objectMap, robots[0], goals[0], priority)
         route2 = UniformCost(objectMap, robots[0], goals[1], priority)
@@ -65,7 +71,7 @@ class SokobanModel(Model):
         path2 = route2.buildPath()
         """print(search2)
         print(path2)"""
-        
+
         print(search2)
         print(path2)
 
@@ -87,7 +93,7 @@ class SokobanModel(Model):
             self.grid.place_agent(expOrd, nextPos)
             self.schedule.add(expOrd)
 
-        #self.datacollector.collect(self)
+        # self.datacollector.collect(self)
 
     def mapConstructor(self):
         x = 0

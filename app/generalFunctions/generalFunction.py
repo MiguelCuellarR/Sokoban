@@ -12,7 +12,7 @@ def createObject(mapList):
 
 
 def imagesPng():
-    dirPath = 'C:/Users/PERSONAL/Desktop/Semeste_X/Sistemas_Inteligentes_I/Sokoban/resources/numbers/'
+    dirPath = 'C:/Users/james/OneDrive/Escritorio/Sistemas inteligentes I/Proyecto/Sokoban/resources/numbers'
     for i in range(10, 101):
         cad = str(i)
         listDig = []
