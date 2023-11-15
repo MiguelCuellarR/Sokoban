@@ -1,16 +1,18 @@
 import mesa
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
-from app.file.file import File
+from app.File.file import File
 from app.agents.box import Box
 from app.agents.goal import Goal
 from app.agents.robot import Robot
 from app.model.model import SokobanModel
 from app.agents.wall import Wall
+import tkinter as tk
 from app.agents.expansionOrder import ExpansionOrder
 
 routes = [" ", "AStar", "Beam", "ClimbHill", "Breadth", "Depth", "UniformCost"]
-heuristics = [" ", "Euclidian", "Manhattan"]
+heuristics = [" ", "Euclidian", "Manhanttan"]
+
 file = File()
 world = file.uploadMap()
 COLUMNS = len(world[0])
@@ -28,8 +30,6 @@ if ROWS >= 5:
 else:
     SIZE_OF_CANVAS_IN_PIXELS_Y = 400
 
-
-
 simulation_params = {
     "routes": mesa.visualization.Choice(name="Selected Route", value=" ", choices=routes),
     "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value=" ", choices=heuristics),
@@ -44,6 +44,7 @@ simulation_params = {
     "width": COLUMNS,
     "height": ROWS
 }
+
 
 def agent_portrayal(agent):
     portrayal = {"Shape": "resources/icons/ground1.png", "Layer": 0}
@@ -62,13 +63,6 @@ def agent_portrayal(agent):
 
 grid = CanvasGrid(agent_portrayal, COLUMNS, ROWS, SIZE_OF_CANVAS_IN_PIXELS_X, SIZE_OF_CANVAS_IN_PIXELS_Y)
 
-'''chart_currents = ChartModule(
-    [
-        {"Label": "Wealthy Agents", "Color": "", "label": "Poder", "backgroundColor": "Blue"},
-        {"Label": "Non Wealthy Agents", "Color": "", "label": "No Poder", "backgroundColor": "Red"},
-    ],
-    data_collector_name="datacollector"
-)'''
 # chart_currents
 server = ModularServer(SokobanModel, [grid], "Sokoban",
                        model_params=simulation_params)

@@ -8,7 +8,6 @@ def createObject(mapList):
     objectMap = {}
     for position in mapList:
         objectMap[position[0]] = position[1]
-
     return objectMap
 
 
@@ -27,7 +26,7 @@ def getPriorities(movements):
     return movements
 
 def imagesPng():
-    dirPath = 'C:/Users/PERSONAL/Desktop/Semeste_X/Sistemas_Inteligentes_I/Sokoban/resources/numbers/'
+    dirPath = 'C:/Users/james/OneDrive/Escritorio/Sistemas inteligentes I/Proyecto/Sokoban/resources/numbers'
     for i in range(10, 101):
         cad = str(i)
         listDig = []

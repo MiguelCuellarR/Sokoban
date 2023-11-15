@@ -3,6 +3,17 @@ from mesa import Model
 from mesa.space import MultiGrid
 from mesa.time import RandomActivation
 from app.agents.box import Box
+import tkinter as tk
+from app.agents.road import Road
+from app.behaviors.heuristics.euclidian import Euclidian
+from app.behaviors.heuristics.manhattan import Manhattan
+from app.behaviors.priority.priority import Priority
+from app.behaviors.routes.informed.aStar import AStar
+from app.behaviors.routes.informed.climbHill import ClimbHill
+from app.behaviors.routes.uninformed.breadth import Breadth
+from app.behaviors.routes.uninformed.depth import Depth
+from app.behaviors.routes.uninformed.uniformCost import UniformCost
+from app.File.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
 from app.agents.road import Road
@@ -11,13 +22,21 @@ from app.agents.wall import Wall
 from app.behaviors.heuristics.heuristicFactory import HeuristicFactory
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.routeFactory import RouteFactory
-from app.file.file import File
+
+from app.File.file import File
 from app.generalFunctions import generalFunction
 from app.generalFunctions.generalFunction import createObject
 
 
+def on_button_click(entry):
+    input_text = entry.get()
+    print("Texto introducido:", input_text)
+
+
 class SokobanModel(Model):
+
     def __init__(self, routes, heuristics, left, up, right, down, width, height):
+
         file = File()
         self.world = file.uploadMap()
         self.heuristics = heuristics
@@ -37,7 +56,8 @@ class SokobanModel(Model):
         )
         self.mapConstructor()
 
-        priority = generalFunction.getPriorities([['L', self.left], ['U', self.up], ['D', self.down], ['R', self.right]])
+        priority = generalFunction.getPriorities(
+            [['L', self.left], ['U', self.up], ['D', self.down], ['R', self.right]])
         if priority[1] and priority[2] and priority[3] and priority[4]:
             priority = Priority(priority[1][0], priority[2][0], priority[3][0], priority[4][0])
         else:
@@ -48,6 +68,19 @@ class SokobanModel(Model):
         if ways and goals:
             heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
 
+        heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
+        priority = Priority()
+        expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
+        print("r", self.heuristics)
+        priority = Priority()
+
+        self.expansionOrder = expOrder1
+        self.road = road1
+
+        '''expOrder2, road2 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
+        print(expOrder2)
+        print(road2)'''
+
         if objectMap and robots and goals and priority:
             if self.routes in ['Depth', 'Breadth', 'UniformCost']:
                 self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0],
@@ -56,7 +89,7 @@ class SokobanModel(Model):
                 if heuristic:
                     self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0],
                                                                               goals[0], priority, heuristic)
-            #self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1],
+            # self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1],
             # priority, heuristic)
 
     def step(self) -> None:
@@ -70,7 +103,7 @@ class SokobanModel(Model):
             self.grid.place_agent(expOrd, nextPos)
             self.schedule.add(expOrd)
 
-        #self.datacollector.collect(self)
+        # self.datacollector.collect(self)
 
     def mapConstructor(self):
         x = 0
