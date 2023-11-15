@@ -11,6 +11,20 @@ def createObject(mapList):
     return objectMap
 
 
+def getPriorities(movements):
+    priorities = {}
+    for mov, prio in movements:
+        if prio in priorities:
+            priorities[prio].append(mov)
+        else:
+            priorities[prio] = [mov]
+
+    movements = [[], [], [], [], []]
+    for key in priorities:
+        moves = priorities[key]
+        movements[key].append(moves[0])
+    return movements
+
 def imagesPng():
     dirPath = 'C:/Users/james/OneDrive/Escritorio/Sistemas inteligentes I/Proyecto/Sokoban/resources/numbers'
     for i in range(10, 101):

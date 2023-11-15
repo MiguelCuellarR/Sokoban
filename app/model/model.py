@@ -22,7 +22,9 @@ from app.agents.wall import Wall
 from app.behaviors.heuristics.heuristicFactory import HeuristicFactory
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.routeFactory import RouteFactory
+
 from app.File.file import File
+from app.generalFunctions import generalFunction
 from app.generalFunctions.generalFunction import createObject
 
 
@@ -32,12 +34,17 @@ def on_button_click(entry):
 
 
 class SokobanModel(Model):
-    def __init__(self, routes, priority1, heuristics, width, height):
+
+    def __init__(self, routes, heuristics, left, up, right, down, width, height):
+
         file = File()
         self.world = file.uploadMap()
         self.heuristics = heuristics
         self.routes = routes
-        self.priority1 = priority1
+        self.left = left
+        self.up = up
+        self.down = down
+        self.right = right
         self.width = len(self.world[0])
         self.height = len(self.world)
         self.grid = MultiGrid(width, height, True)
@@ -49,31 +56,23 @@ class SokobanModel(Model):
         )
         self.mapConstructor()
 
+        priority = generalFunction.getPriorities(
+            [['L', self.left], ['U', self.up], ['D', self.down], ['R', self.right]])
+        if priority[1] and priority[2] and priority[3] and priority[4]:
+            priority = Priority(priority[1][0], priority[2][0], priority[3][0], priority[4][0])
+        else:
+            priority = Priority()
+
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
+        heuristic = {}
+        if ways and goals:
+            heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
 
         heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
         priority = Priority()
         expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
         print("r", self.heuristics)
         priority = Priority()
-        route = UniformCost(objectMap, robots[0], goals[0], priority)
-        route2 = UniformCost(objectMap, robots[0], goals[1], priority)
-
-        search = route.search()
-        path = route.buildPath()
-        search2 = route2.search()
-        path2 = route2.buildPath()
-        print(search)
-        print(path)
-        print('---------------------')
-
-        search2 = route2.search()
-        path2 = route2.buildPath()
-        """print(search2)
-        print(path2)"""
-
-        print(search2)
-        print(path2)
 
         self.expansionOrder = expOrder1
         self.road = road1
@@ -81,6 +80,17 @@ class SokobanModel(Model):
         '''expOrder2, road2 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
         print(expOrder2)
         print(road2)'''
+
+        if objectMap and robots and goals and priority:
+            if self.routes in ['Depth', 'Breadth', 'UniformCost']:
+                self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0],
+                                                                          priority, {})
+            else:
+                if heuristic:
+                    self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0],
+                                                                              goals[0], priority, heuristic)
+            # self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1],
+            # priority, heuristic)
 
     def step(self) -> None:
         self.schedule.step()

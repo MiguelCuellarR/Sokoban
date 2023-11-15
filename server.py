@@ -10,29 +10,44 @@ from app.agents.wall import Wall
 import tkinter as tk
 from app.agents.expansionOrder import ExpansionOrder
 
-routes = ["AStar", "ClimbHill", "Breadth", "Depth", "UniformCost"]
-heuristics = ["Euclidian", "Manhanttan"]
-moves = ["Left", "Right", "Up", "Down"]
+routes = [" ", "AStar", "Beam", "ClimbHill", "Breadth", "Depth", "UniformCost"]
+heuristics = [" ", "Euclidian", "Manhanttan"]
 
 file = File()
 world = file.uploadMap()
 COLUMNS = len(world[0])
 ROWS = len(world)
-SIZE_OF_CANVAS_IN_PIXELS_X = 500
-SIZE_OF_CANVAS_IN_PIXELS_Y = 500
 
+SIZE_OF_CANVAS_IN_PIXELS_X = 0
+SIZE_OF_CANVAS_IN_PIXELS_Y = 0
+if COLUMNS >= 7:
+    SIZE_OF_CANVAS_IN_PIXELS_X = 750
+else:
+    SIZE_OF_CANVAS_IN_PIXELS_X = 400
+
+if ROWS >= 5:
+    SIZE_OF_CANVAS_IN_PIXELS_Y = 455
+else:
+    SIZE_OF_CANVAS_IN_PIXELS_Y = 400
 
 simulation_params = {
     "routes": mesa.visualization.Choice(name="Selected Route", value=" ", choices=routes),
-    "priority1": mesa.visualization.Choice(name="Selected Route", value="", choices=moves),
     "heuristics": mesa.visualization.Choice(name="Selected Heuristics", value=" ", choices=heuristics),
+    "left": mesa.visualization.Slider(name='Left', value=0, min_value=0, max_value=4, step=1,
+                                      description="Select a priority for left movement"),
+    "up": mesa.visualization.Slider(name='Up', value=0, min_value=0, max_value=4, step=1,
+                                    description="Select a priority for up movement"),
+    "right": mesa.visualization.Slider(name='Right', value=0, min_value=0, max_value=4, step=1,
+                                       description="Select a priority for right movement"),
+    "down": mesa.visualization.Slider(name='Down', value=0, min_value=0, max_value=4, step=1,
+                                      description="Select a priority for down movement"),
     "width": COLUMNS,
     "height": ROWS
 }
 
 
 def agent_portrayal(agent):
-    portrayal = {"Shape": "resources/icons/pavimentacion.png", "Layer": 0}
+    portrayal = {"Shape": "resources/icons/ground1.png", "Layer": 0}
     if isinstance(agent, Wall):
         return {"Shape": "resources/icons/muro.png", "Layer": 0}
     elif isinstance(agent, ExpansionOrder):
@@ -42,20 +57,12 @@ def agent_portrayal(agent):
     elif isinstance(agent, Goal):
         return {"Shape": "resources/icons/bandera.png", "Layer": 1}
     elif isinstance(agent, Box):
-        return {"Shape": "resources/icons/paquete.png", "Layer": 3}
+        return {"Shape": "resources/icons/box.png", "Layer": 3}
     return portrayal
 
 
 grid = CanvasGrid(agent_portrayal, COLUMNS, ROWS, SIZE_OF_CANVAS_IN_PIXELS_X, SIZE_OF_CANVAS_IN_PIXELS_Y)
 
-
-'''chart_currents = ChartModule(
-    [
-        {"Label": "Wealthy Agents", "Color": "", "label": "Poder", "backgroundColor": "Blue"},
-        {"Label": "Non Wealthy Agents", "Color": "", "label": "No Poder", "backgroundColor": "Red"},
-    ],
-    data_collector_name="datacollector"
-)'''
 # chart_currents
 server = ModularServer(SokobanModel, [grid], "Sokoban",
                        model_params=simulation_params)

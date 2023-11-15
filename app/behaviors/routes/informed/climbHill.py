@@ -26,6 +26,7 @@ class ClimbHill(Route):
                 break
 
             if posV not in self.visited:
+
                 queue = PriorityQueue()
                 auxEdgeList = []
                 self.visited.add(posV)
@@ -66,5 +67,13 @@ class ClimbHill(Route):
                     vertex = queue.get()
                     if not queue.empty():
                         self.levelQueue.appendleft((auxLevel, queue))
+
+            else:
+                aux = self.levelQueue.popleft()
+                auxLevel = aux[0]
+                queue = aux[1]
+                vertex = queue.get()
+                if not queue.empty():
+                    self.levelQueue.appendleft((auxLevel, queue))
 
         return self.auxList

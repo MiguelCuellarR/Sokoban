@@ -56,7 +56,6 @@ class Beam(Route):
             if newBeam:
                 level += 1
                 newBeam.sort(key=lambda x: x[0], reverse=False)
-                # print(newBeam)
                 beam = newBeam[:self.beamWidth]
                 self.levelQueue.append((level, beam))
             else:
