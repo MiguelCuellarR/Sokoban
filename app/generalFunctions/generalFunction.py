@@ -25,8 +25,9 @@ def getPriorities(movements):
         movements[key].append(moves[0])
     return movements
 
+
 def imagesPng():
-    dirPath = 'C:/Users/james/OneDrive/Escritorio/Sistemas inteligentes I/Proyecto/Sokoban/resources/numbers'
+    dirPath = 'resources/numbers'
     for i in range(10, 101):
         cad = str(i)
         listDig = []

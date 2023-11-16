@@ -1,4 +1,4 @@
-from app.behaviors.heuristics.Heuristic import Heuristic
+from app.behaviors.heuristics.heuristic import Heuristic
 from app.generalFunctions.generalFunction import createObject
 from resources.constants import valueStep
 
