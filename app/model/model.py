@@ -32,6 +32,8 @@ class SokobanModel(Model):
         self.height = len(self.world)
         self.grid = MultiGrid(width, height, True)
         self.schedule = RandomActivation(self)
+        self.expansionOrder = []
+        self.road = []
         self.running = True
         self.datacollector = mesa.DataCollector(
             model_reporters={
@@ -59,6 +61,8 @@ class SokobanModel(Model):
                 if heuristic:
                     self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0],
                                                                               goals[0], priority, heuristic)
+
+        #print(self.expansionOrder)
             # self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1],
             # priority, heuristic)
 
