@@ -12,7 +12,6 @@ class UniformCost(Route):
 
     def search(self):
         self.queue.put((0.0, self.root, ()))
-        i = 0.00
         while self.queue:
             vertex = self.queue.get()
             routeSum = vertex[0]
@@ -31,16 +30,21 @@ class UniformCost(Route):
                 self.auxList.append([posV, previousV, int(routeSum)])
                 adjList = self.graph[vertData]
                 order = self.priority.priorityOrder(adjList)
-                j = 0.000
+                i = 0.000
                 for prio in order:
                     posN = prio[0]
+                    movN = prio[1]
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        summation = routeSum + valueStep
-                        self.queue.put((summation + i + j, (posN, typeN, codeN), posV))
-                        j = j + 0.001
+                        if movN == self.priority.second:
+                            i = 0.001
+                        elif movN == self.priority.third:
+                            i = 0.002
+                        elif movN == self.priority.fourth:
+                            i = 0.003
 
-                i = i + 0.01
+                        summation = routeSum + valueStep
+                        self.queue.put((summation + i, (posN, typeN, codeN), posV))
 
         return self.auxList
