@@ -44,7 +44,6 @@ class AStar(Route):
                     if posN not in self.visited:
                         for heuN in self.heuristic[posN]:
                             if heuN[1] == self.destiny[0]:
-
                                 if movN == self.priority.second:
                                     i = 0.01
                                 elif movN == self.priority.third:
