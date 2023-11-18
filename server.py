@@ -11,7 +11,7 @@ import tkinter as tk
 from app.agents.expansionOrder import ExpansionOrder
 
 routes = [" ", "AStar", "Beam", "ClimbHill", "Breadth", "Depth", "UniformCost"]
-heuristics = [" ", "Euclidian", "Manhanttan"]
+heuristics = [" ", "Euclidian", "Manhattan"]
 
 file = File()
 world = file.uploadMap()

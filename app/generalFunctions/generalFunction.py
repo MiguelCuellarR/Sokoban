@@ -25,6 +25,7 @@ def getPriorities(movements):
         movements[key].append(moves[0])
     return movements
 
+
 def imagesPng():
     dirPath = 'C:/Users/james/OneDrive/Escritorio/Sistemas inteligentes I/Proyecto/Sokoban/resources/numbers'
     for i in range(10, 101):
@@ -40,4 +41,4 @@ def imagesPng():
         print(cad + '.png')
         cv2.imwrite(dirPath + cad + '.png', resize)
 
-#imagesPng()
+# imagesPng()

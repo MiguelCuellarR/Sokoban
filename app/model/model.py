@@ -28,11 +28,6 @@ from app.generalFunctions import generalFunction
 from app.generalFunctions.generalFunction import createObject
 
 
-def on_button_click(entry):
-    input_text = entry.get()
-    print("Texto introducido:", input_text)
-
-
 class SokobanModel(Model):
 
     def __init__(self, routes, heuristics, left, up, right, down, width, height):
@@ -71,7 +66,6 @@ class SokobanModel(Model):
         heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
         priority = Priority()
         expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
-        print("r", self.heuristics)
         priority = Priority()
 
         self.expansionOrder = expOrder1
@@ -89,8 +83,6 @@ class SokobanModel(Model):
                 if heuristic:
                     self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0],
                                                                               goals[0], priority, heuristic)
-            # self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1],
-            # priority, heuristic)
 
     def step(self) -> None:
         self.schedule.step()
