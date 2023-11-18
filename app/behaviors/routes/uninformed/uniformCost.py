@@ -39,7 +39,6 @@ class UniformCost(Route):
 
         return self.auxList
 
-
     def _movePriority(self):
         vertex = self.queue.get()
 
