@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class Priority:
     def __init__(self, first='L', second='U', third='R', fourth='D'):
         self.first = first
@@ -41,7 +38,6 @@ class Priority:
                         if element[2] == 'Goal':
                             possibleStep.append(element)
                 else:
-
                     if prio[0][2] != 'Wall':
                         possibleStep.append(prio[0])
 

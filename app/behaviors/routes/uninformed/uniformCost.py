@@ -11,10 +11,8 @@ class UniformCost(Route):
         self.previousPos = ()
 
     def search(self):
-        self.queue.put((0.0, self.root, ()))
-        i = 0.00
-        while self.queue:
-            vertex = self.queue.get()
+        vertex = (0, self.root, ())
+        while vertex:
             routeSum = vertex[0]
             vertData = vertex[1]
             posV = vertData[0]
@@ -31,16 +29,116 @@ class UniformCost(Route):
                 self.auxList.append([posV, previousV, int(routeSum)])
                 adjList = self.graph[vertData]
                 order = self.priority.priorityOrder(adjList)
-                j = 0.000
                 for prio in order:
                     posN = prio[0]
                     typeN = prio[2]
                     codeN = prio[3]
-                    if posN not in self.visited:
-                        summation = routeSum + valueStep
-                        self.queue.put((summation + i + j, (posN, typeN, codeN), posV))
-                        j = j + 0.001
-
-                i = i + 0.01
+                    summation = routeSum + valueStep
+                    self.queue.put((summation, (posN, typeN, codeN), posV))
+            vertex = self._movePriority()
 
         return self.auxList
+
+
+    def _movePriority(self):
+        vertex = self.queue.get()
+
+        auxList = []
+        while not self.queue.empty():
+            auxV = self.queue.get()
+            left, up, right, down = (), (), (), ()
+            if vertex[0] == auxV[0]:
+                vertexPosI = vertex[1][0][0]
+                auxPosI = auxV[1][0][0]
+                vertexPosJ = vertex[1][0][1]
+                auxPosJ = auxV[1][0][1]
+
+                if vertexPosI > auxPosI:
+                    right = vertex
+                    left = auxV
+                elif vertexPosI < auxPosI:
+                    right = auxV
+                    left = vertex
+
+                if vertexPosJ > auxPosJ:
+                    up = vertex
+                    down = auxV
+                elif vertexPosJ < auxPosJ:
+                    up = auxV
+                    down = vertex
+
+                decision = self._returnPriority(left, right, up, down)
+                if decision:
+                    name = decision[0]
+                    vertex = decision[1]
+
+                    if name == 'L':
+                        auxList.append(right)
+                    elif name == 'U':
+                        auxList.append(down)
+                    elif name == 'R':
+                        auxList.append(left)
+                    elif name == 'D':
+                        auxList.append(up)
+            else:
+                self.queue.put(auxV)
+                break
+
+        if auxList:
+            for v in auxList:
+                self.queue.put(v)
+
+        return vertex
+
+    def _returnPriority(self, left, right, up, down):
+        if self.priority.first == 'L':
+            if left:
+                return ['L', left]
+        elif self.priority.first == 'U':
+            if up:
+                return ['U', up]
+        elif self.priority.first == 'R':
+            if right:
+                return ['R', right]
+        elif self.priority.first == 'D':
+            if down:
+                return ['D', down]
+
+        if self.priority.second == 'L':
+            if left:
+                return ['L', left]
+        elif self.priority.second == 'U':
+            if up:
+                return ['U', up]
+        elif self.priority.second == 'R':
+            if right:
+                return ['R', right]
+        elif self.priority.second == 'D':
+            if down:
+                return ['D', down]
+
+        if self.priority.third == 'L':
+            if left:
+                return ['L', left]
+        elif self.priority.third == 'U':
+            if up:
+                return ['U', up]
+        elif self.priority.third == 'R':
+            if right:
+                return ['R', right]
+        elif self.priority.third == 'D':
+            if down:
+                return ['D', down]
+
+        if self.priority.fourth == 'L':
+            if left:
+                return ['L', left]
+        elif self.priority.fourth == 'U':
+            if up:
+                return ['U', up]
+        elif self.priority.fourth == 'R':
+            if right:
+                return ['R', right]
+        elif self.priority.fourth == 'D':
+            if down:
+                return ['D', down]
