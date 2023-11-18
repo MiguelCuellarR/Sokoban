@@ -3,17 +3,7 @@ from mesa import Model
 from mesa.space import MultiGrid
 from mesa.time import RandomActivation
 from app.agents.box import Box
-import tkinter as tk
-from app.agents.road import Road
-from app.behaviors.heuristics.euclidian import Euclidian
-from app.behaviors.heuristics.manhattan import Manhattan
-from app.behaviors.priority.priority import Priority
-from app.behaviors.routes.informed.aStar import AStar
-from app.behaviors.routes.informed.climbHill import ClimbHill
-from app.behaviors.routes.uninformed.breadth import Breadth
-from app.behaviors.routes.uninformed.depth import Depth
-from app.behaviors.routes.uninformed.uniformCost import UniformCost
-from app.File.file import File
+from app.file.file import File
 from app.agents.expansionOrder import ExpansionOrder
 from app.agents.goal import Goal
 from app.agents.road import Road
@@ -22,8 +12,6 @@ from app.agents.wall import Wall
 from app.behaviors.heuristics.heuristicFactory import HeuristicFactory
 from app.behaviors.priority.priority import Priority
 from app.behaviors.routes.routeFactory import RouteFactory
-
-from app.File.file import File
 from app.generalFunctions import generalFunction
 from app.generalFunctions.generalFunction import createObject
 
@@ -63,18 +51,6 @@ class SokobanModel(Model):
         if ways and goals:
             heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
 
-        heuristic = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
-        priority = Priority()
-        expOrder1, road1 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0], priority, heuristic)
-        priority = Priority()
-
-        self.expansionOrder = expOrder1
-        self.road = road1
-
-        '''expOrder2, road2 = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1], priority, heuristic)
-        print(expOrder2)
-        print(road2)'''
-
         if objectMap and robots and goals and priority:
             if self.routes in ['Depth', 'Breadth', 'UniformCost']:
                 self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[0],
@@ -83,6 +59,8 @@ class SokobanModel(Model):
                 if heuristic:
                     self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0],
                                                                               goals[0], priority, heuristic)
+            # self.expansionOrder, self.road = RouteFactory.createRoute(self.routes, objectMap, robots[0], goals[1],
+            # priority, heuristic)
 
     def step(self) -> None:
         self.schedule.step()
