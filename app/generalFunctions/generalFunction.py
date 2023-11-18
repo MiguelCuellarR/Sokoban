@@ -41,4 +41,4 @@ def imagesPng():
         print(cad + '.png')
         cv2.imwrite(dirPath + cad + '.png', resize)
 
-#imagesPng()
+# imagesPng()
