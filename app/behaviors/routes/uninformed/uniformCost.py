@@ -29,13 +29,24 @@ class UniformCost(Route):
                 self.auxList.append([posV, previousV, int(routeSum)])
                 adjList = self.graph[vertData]
                 order = self.priority.priorityOrder(adjList)
+                i = 0.000
                 for prio in order:
                     posN = prio[0]
+                    movN = prio[1]
                     typeN = prio[2]
                     codeN = prio[3]
+
+                    if posN not in self.visited:
+                        if movN == self.priority.second:
+                            i = 0.001
+                        elif movN == self.priority.third:
+                            i = 0.002
+                        elif movN == self.priority.fourth:
+                            i = 0.003
+
                     summation = routeSum + valueStep
-                    self.queue.put((summation, (posN, typeN, codeN), posV))
-            vertex = self._movePriority()
+                    self.queue.put((summation + i, (posN, typeN, codeN), posV))
+            vertex = self.queue.get()
 
         return self.auxList
 

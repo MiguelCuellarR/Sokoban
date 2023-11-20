@@ -37,16 +37,26 @@ class AStar(Route):
 
                 adjList = self.graph[grid[1]]
                 order = self.priority.priorityOrder(adjList)
+                i = 0.000
                 for prio in order:
                     posN = prio[0]
+                    movN = prio[1]
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
                         for heuN in self.heuristic[posN]:
                             if heuN[1] == self.destiny[0]:
+                                if posN not in self.visited:
+                                    if movN == self.priority.second:
+                                        i = 0.001
+                                    elif movN == self.priority.third:
+                                        i = 0.002
+                                    elif movN == self.priority.fourth:
+                                        i = 0.003
+
                                 valueH = heuN[0]
                                 summation = routeSum + valueStep
-                                f = summation + valueH
+                                f = summation + valueH + i
                                 self.queue.put((f, auxH, [summation, (posN, typeN, codeN), posV]))
 
             square = self._movePriority()
