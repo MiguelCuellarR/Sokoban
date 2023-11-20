@@ -13,12 +13,11 @@ class AStar(Route):
     def search(self):
         heuristics = self.heuristic[self.root[0]]
         for heuristic in heuristics:
-            self.queue.put((heuristic[0], heuristic[1], [0, self.root, ()]))
+            self.queue.put((heuristic[0], heuristic[1], [0, self.root, ()], 0))
 
         square = self.queue.get()
         while square:
-            valueHeuristic = square[0]
-
+            valueHeuristic = square[0] - square[3]
             auxH = square[1]
             grid = square[2]
             routeSum = grid[0]
@@ -57,7 +56,7 @@ class AStar(Route):
                                 valueH = heuN[0]
                                 summation = routeSum + valueStep
                                 f = summation + valueH + i
-                                self.queue.put((f, auxH, [summation, (posN, typeN, codeN), posV]))
+                                self.queue.put((f, auxH, [summation, (posN, typeN, codeN), posV], i))
 
             square = self._movePriority()
 

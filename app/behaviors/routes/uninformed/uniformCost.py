@@ -11,9 +11,9 @@ class UniformCost(Route):
         self.previousPos = ()
 
     def search(self):
-        vertex = (0, self.root, ())
+        vertex = (0, self.root, (), 0)
         while vertex:
-            routeSum = vertex[0]
+            routeSum = vertex[0] - vertex[3]
             vertData = vertex[1]
             posV = vertData[0]
             typeV = vertData[1]
@@ -38,14 +38,14 @@ class UniformCost(Route):
 
                     if posN not in self.visited:
                         if movN == self.priority.second:
-                            i = 0.001
+                            i = 0.01
                         elif movN == self.priority.third:
-                            i = 0.002
+                            i = 0.02
                         elif movN == self.priority.fourth:
-                            i = 0.003
+                            i = 0.03
 
                     summation = routeSum + valueStep
-                    self.queue.put((summation + i, (posN, typeN, codeN), posV))
+                    self.queue.put((summation + i, (posN, typeN, codeN), posV, i))
             vertex = self.queue.get()
 
         return self.auxList
