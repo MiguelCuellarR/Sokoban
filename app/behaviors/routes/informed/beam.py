@@ -8,7 +8,7 @@ class Beam(Route):
         super().__init__(graph, root, destiny, priority, heuristic)
         self.levelQueue = deque()
         self.previousPos = ()
-        self.beamWidth = 4
+        self.beamWidth = 2
 
     def search(self):
         level = 0
