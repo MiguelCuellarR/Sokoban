@@ -1,1 +1,1 @@
-valueStep = 1
+valueStep = 10
