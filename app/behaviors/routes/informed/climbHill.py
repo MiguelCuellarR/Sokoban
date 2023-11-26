@@ -8,7 +8,6 @@ class ClimbHill(Route):
     def __init__(self, graph, root, destiny, priority, heuristic):
         super().__init__(graph, root, destiny, priority, heuristic)
         self.levelQueue = deque()
-        self.previousPos = ()
 
     def search(self):
         level = 0
@@ -26,14 +25,15 @@ class ClimbHill(Route):
                 break
 
             if posV not in self.visited:
-
+                print('-----------------------------------------------------------------')
+                print(f'previousV: {previousV}, posV: {posV}, heuristicV: {heuristicV}')
                 queue = PriorityQueue()
                 auxEdgeList = []
                 self.visited.add(posV)
                 self.auxList.append([posV, previousV, int(heuristicV)])
                 adjList = self.graph[grid]
                 order = self.priority.priorityOrder(adjList)
-
+                print(order)
                 for prio in order:
                     posN = prio[0]
                     movN = prio[1]
@@ -42,10 +42,11 @@ class ClimbHill(Route):
                     if posN not in self.visited:
                         for heuN in self.heuristic[posN]:
                             if heuN[1] == self.destiny[0]:
+                                print(f'posN: {posN}, movN: {movN}, heuN: {heuN}')
                                 auxEdgeList.append([heuN[0], posN, movN, typeN, codeN])
-
+                print(f'auxList: {auxEdgeList}')
                 if auxEdgeList:
-                    level += 1
+                    print(f'level: {level}')
                     for aux in auxEdgeList:
                         mov = aux[2]
                         i = 0
@@ -55,25 +56,21 @@ class ClimbHill(Route):
                             i = 0.02
                         elif mov == self.priority.fourth:
                             i = 0.03
-
                         queue.put((aux[0] + i, (aux[1], aux[3], aux[4]), posV))
                     vertex = queue.get()
-                    self.levelQueue.append((level, queue))
-
-                else:
-                    aux = self.levelQueue.popleft()
-                    auxLevel = aux[0]
-                    queue = aux[1]
-                    vertex = queue.get()
                     if not queue.empty():
-                        self.levelQueue.appendleft((auxLevel, queue))
+                        level += 1
+                        self.levelQueue.append((level, queue))
 
             else:
+                print('***********************')
                 aux = self.levelQueue.popleft()
+                print(aux)
                 auxLevel = aux[0]
                 queue = aux[1]
                 vertex = queue.get()
                 if not queue.empty():
                     self.levelQueue.appendleft((auxLevel, queue))
+
 
         return self.auxList
