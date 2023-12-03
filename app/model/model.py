@@ -74,7 +74,6 @@ class SokobanModel(Model):
                             expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, robot,
                                                                             (nextR, box[1], box[2]),
                                                                             self.priority, {})
-
                             agents = self.grid[robot[0]]
                             agent = [agent for agent in agents if isinstance(agent, Robot)]
                             agent[0].road.append(road)
@@ -86,7 +85,6 @@ class SokobanModel(Model):
                             if box[2] == goal[2]:
                                 expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, box, goal,
                                                                                 self.priority, heuristicGoal)
-                                print(f'box: {road}')
                                 agents = self.grid[box[0]]
                                 agent = [agent for agent in agents if isinstance(agent, Box)]
                                 agent[0].road.append(road)
@@ -99,13 +97,10 @@ class SokobanModel(Model):
                                 currentB = boxAgent.pos
                                 nextR = self.moveIdentify(currentB, nextB)
                                 aim = (nextR, box[1], box[2])
-                                print(f'aim: {aim}')
                                 if aim and boxes:
                                     heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
-                                print(f'heuristicBox: {heuristicBox}')
                                 expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, robot, aim,
                                                                                 self.priority, heuristicBox)
-                                print(f'robot: {road}')
                                 agents = self.grid[robot[0]]
                                 agent = [agent for agent in agents if isinstance(agent, Robot)]
                                 agent[0].road.append(road)
@@ -116,27 +111,9 @@ class SokobanModel(Model):
         if self.boxesAgents:
             box = self.boxesAgents[0]
             if box.road[0]:
-                for robot in self.robotsAgents:
-                    if robot.code == box.code:
-                        if len(robot.road[0]) > 0:
-                            self.grid.move_agent(robot, robot.road[0][0])
-                            robot.road[0] = robot.road[0][1:]
-                        else:
-                            nextPosBox = box.road[0][0]
-                            self.grid.move_agent(robot, box.pos)
-                            self.grid.move_agent(box, nextPosBox)
-                            if len(box.road[0]) > 1:
-                                box.road[0] = box.road[0][1:]
-                                objectMap, _, _, _, ways = self.mapNeighbors()
-                                nextR = self.moveIdentify(nextPosBox, box.road[0][0])
-                                aim = (nextR, 'Box', box.code)
-                                heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
-                                _, road = RouteFactory.createRoute(self.routes, objectMap, (robot.pos, 'Robot',
-                                                                                            robot.code), aim,
-                                                                   self.priority, heuristicBox)
-                                robot.road[0] = road
-                            else:
-                                self.boxesAgents = self.boxesAgents[1:]
+                self.block(box)
+
+
 
         '''def expansionOrder(self, currentStep):
         currentStep = self.schedule.steps
@@ -147,6 +124,109 @@ class SokobanModel(Model):
             expOrd = ExpansionOrder(currentStep + 1000, self, imagePath)
             self.grid.place_agent(expOrd, nextPos)
             self.schedule.add(expOrd)'''
+
+    def block(self, box):
+        square = self.grid[box.road[0][0]]
+
+        if len(square) > 1:
+            for neighbor in square:
+                if isinstance(neighbor, Robot):
+                    robotNeighbors = self.identifyPossiblePush(neighbor)
+                    movement = self.selectMovement(robotNeighbors, neighbor)
+                    self.grid.move_agent(neighbor, movement[1])
+
+                elif isinstance(neighbor, Goal):
+                    self.robotPush(box)
+                    break
+
+                elif isinstance(neighbor, Box):
+                    robot = next((robot for robot in self.robotsAgents if robot.code == neighbor.code), None)
+                    boxNeighbors = self.identifyPossiblePush(neighbor)
+                    movement = self.selectMovement(boxNeighbors, neighbor)
+                    objectMap, _, _, _, ways = self.mapNeighbors()
+                    aim = (movement[0], 'Box', neighbor.code)
+                    heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
+                    _, road = RouteFactory.createRoute(self.routes, objectMap, (robot.pos, 'Robot',
+                                                                                robot.code), aim,
+                                                       self.priority, heuristicBox)
+                    if len(neighbor.road[0]) > 1:
+                        if neighbor.road[0][0] != movement[1] and neighbor.road[0][0] != neighbor.pos:
+                            neighbor.road[0].insert(0, neighbor.pos)
+                            neighbor.road[0].insert(0, movement[1])
+                    robot.road[0] = road
+                    self.robotPush(neighbor)
+        else:
+            self.robotPush(box)
+
+    def robotPush(self, box):
+        for robot in self.robotsAgents:
+            if robot.code == box.code:
+                if len(robot.road[0]) > 0:
+                    self.grid.move_agent(robot, robot.road[0][0])
+                    robot.road[0] = robot.road[0][1:]
+                else:
+                    nextPosBox = box.road[0][0]
+                    self.grid.move_agent(robot, box.pos)
+                    self.grid.move_agent(box, nextPosBox)
+                    if len(box.road[0]) > 1:
+                        box.road[0] = box.road[0][1:]
+                        objectMap, _, _, _, ways = self.mapNeighbors()
+                        nextR = self.moveIdentify(nextPosBox, box.road[0][0])
+                        aim = (nextR, 'Box', box.code)
+                        heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
+                        _, road = RouteFactory.createRoute(self.routes, objectMap, (robot.pos, 'Robot',
+                                                                                    robot.code), aim,
+                                                           self.priority, heuristicBox)
+                        robot.road[0] = road
+                    else:
+                        self.boxesAgents = self.boxesAgents[1:]
+
+    def identifyPossiblePush(self, neighbor):
+        boxNeighbors = self.grid.get_neighbors(neighbor.pos, False)
+        boxNeighbors = self.neighborIdentify(boxNeighbors, neighbor.pos[0], neighbor.pos[1])
+
+        newBoxNeighbors = []
+        for boxN in boxNeighbors:
+            if boxN[1] == 'Box':
+                if boxN[0][0] == 0 or boxN[0][0] == self.height - 1:
+                    continue
+
+                elif boxN[0][1] == 0 or boxN[0][1] == self.width - 1:
+                    continue
+
+            agents = self.grid[boxN[0]]
+            possible = True
+            for agent in agents:
+                if isinstance(agent, Box) or isinstance(agent, Wall):
+                    possible = False
+            if not possible:
+                continue
+            else:
+                newBoxNeighbors.append(boxN)
+        return newBoxNeighbors
+
+    def selectMovement(self, newBoxNeighbors, neighbor):
+        movements = ()
+        for newBoxNeighbors in newBoxNeighbors:
+            newRPos = self.moveIdentify(neighbor.pos, newBoxNeighbors[0])
+            agents = self.grid[newRPos]
+            if isinstance(neighbor, Box):
+                if len(agents) > 1:
+                    agent = next(
+                        (agent for agent in agents if isinstance(agent, Box)), None)
+                    if agent:
+                        continue
+                    else:
+                        movements = (newRPos, newBoxNeighbors[0])
+                else:
+                    if isinstance(agents[0], Wall):
+                        continue
+                    movements = (newRPos, newBoxNeighbors[0])
+            else:
+                return newRPos, newBoxNeighbors[0]
+
+        return movements
+
 
     def mapConstructor(self):
         x = 0

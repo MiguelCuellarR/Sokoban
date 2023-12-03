@@ -32,7 +32,7 @@ class Breadth(Route):
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        if typeN == 'Box' and posN != self.destiny[0]:
+                        if self.root[1] == 'Robot' and typeN == 'Box' and posN != self.destiny[0]:
                             continue
                         else:
                             self.queue.append(((posN, typeN, codeN), posV))
