@@ -14,8 +14,6 @@ class Breadth(Route):
         while self.queue:
             vertex = self.queue.popleft()
             posV = vertex[0][0]
-            typeV = vertex[0][1]
-            codeV = vertex[0][2]
             previousV = vertex[1]
 
             if vertex[0] == self.destiny:
@@ -34,6 +32,9 @@ class Breadth(Route):
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        self.queue.append(((posN, typeN, codeN), posV))
+                        if typeN == 'Box' and posN != self.destiny[0]:
+                            continue
+                        else:
+                            self.queue.append(((posN, typeN, codeN), posV))
 
         return self.auxList

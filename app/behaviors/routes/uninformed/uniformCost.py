@@ -37,15 +37,19 @@ class UniformCost(Route):
                     codeN = prio[3]
 
                     if posN not in self.visited:
-                        if movN == self.priority.second:
-                            i = 0.01
-                        elif movN == self.priority.third:
-                            i = 0.02
-                        elif movN == self.priority.fourth:
-                            i = 0.03
+                        if typeN == 'Box' and posN != self.destiny[0]:
+                            continue
+                        else:
+                            if movN == self.priority.second:
+                                i = 0.01
+                            elif movN == self.priority.third:
+                                i = 0.02
+                            elif movN == self.priority.fourth:
+                                i = 0.03
 
-                    summation = routeSum + valueStep
-                    self.queue.put((summation + i, (posN, typeN, codeN), posV, i))
+
+                            summation = routeSum + valueStep
+                            self.queue.put((summation + i, (posN, typeN, codeN), posV, i))
             vertex = self.queue.get()
 
         return self.auxList
