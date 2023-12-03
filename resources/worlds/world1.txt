@@ -1,0 +1,7 @@
+R,  	R, 	R, 	R, 	R,
+R, 	C,  	C, 	C, 	R,
+R, 	C-a-1, 	C-b-2, 	C, 	R, 
+R, 	R, 	R, 	C, 	R, 
+R, 	M-1, 	C-b-1, 	C, 	R,
+R,  	C-a-2, 	C, 	M-2, 	R,
+R, 	R, 	R, 	R, 	R, 

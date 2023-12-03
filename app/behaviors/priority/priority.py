@@ -35,7 +35,11 @@ class Priority:
             if prio:
                 if len(prio) > 1:
                     for element in prio:
-                        if element[2] == 'Goal':
+                        if element[2] == 'Box':
+                            possibleStep.append(element)
+                        elif element[2] == 'Robot':
+                            possibleStep.append(element)
+                        elif element[2] == 'Goal':
                             possibleStep.append(element)
                 else:
                     if prio[0][2] != 'Wall':

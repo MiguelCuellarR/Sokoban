@@ -2,7 +2,7 @@ class File:
 
     def uploadMap(self) -> list[list[str]]:
         map_data = []
-        with open('resources/worlds/worldSus.txt') as txt_file:
+        with open('resources/worlds/world1.txt') as txt_file:
             for line in txt_file:
                 char = line.strip().replace('\t', '').replace(',', ' ')
                 char = char.split()

@@ -15,8 +15,6 @@ class Depth(Route):
             vertex = self.stack.pop()
             vertData = vertex[0]
             posV = vertData[0]
-            typeV = vertData[1]
-            codeV = vertData[2]
             previousV = vertex[1]
 
             if vertData == self.destiny:
@@ -33,6 +31,9 @@ class Depth(Route):
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        self.stack.append(((posN, typeN, codeN), posV))
+                        if typeN == 'Box' and posN != self.destiny[0]:
+                            continue
+                        else:
+                            self.stack.append(((posN, typeN, codeN), posV))
 
         return self.auxList
