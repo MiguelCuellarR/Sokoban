@@ -86,6 +86,7 @@ class SokobanModel(Model):
                             if box[2] == goal[2]:
                                 expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, box, goal,
                                                                                 self.priority, heuristicGoal)
+                                print(f'box: {road}')
                                 agents = self.grid[box[0]]
                                 agent = [agent for agent in agents if isinstance(agent, Box)]
                                 agent[0].road.append(road)
@@ -98,12 +99,13 @@ class SokobanModel(Model):
                                 currentB = boxAgent.pos
                                 nextR = self.moveIdentify(currentB, nextB)
                                 aim = (nextR, box[1], box[2])
-                                print(aim)
+                                print(f'aim: {aim}')
                                 if aim and boxes:
                                     heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
-
+                                print(f'heuristicBox: {heuristicBox}')
                                 expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, robot, aim,
                                                                                 self.priority, heuristicBox)
+                                print(f'robot: {road}')
                                 agents = self.grid[robot[0]]
                                 agent = [agent for agent in agents if isinstance(agent, Robot)]
                                 agent[0].road.append(road)

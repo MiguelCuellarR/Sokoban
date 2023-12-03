@@ -26,7 +26,7 @@ class AStar(Route):
             codeV = grid[1][2]
             previousV = grid[2]
 
-            if grid[1] == self.destiny:
+            if posV == self.destiny[0]:
                 self.auxList.append([posV, previousV, round(float(valueHeuristic), 3)])
                 break
 
@@ -43,9 +43,11 @@ class AStar(Route):
                     typeN = prio[2]
                     codeN = prio[3]
                     if posN not in self.visited:
-                        for heuN in self.heuristic[posN]:
-                            if heuN[1] == self.destiny[0]:
-                                if posN not in self.visited:
+                        if typeN == 'Box' and posN != self.destiny[0]:
+                            continue
+                        else:
+                            for heuN in self.heuristic[posN]:
+                                if heuN[1] == self.destiny[0]:
                                     if movN == self.priority.second:
                                         i = 0.001
                                     elif movN == self.priority.third:
@@ -53,10 +55,10 @@ class AStar(Route):
                                     elif movN == self.priority.fourth:
                                         i = 0.003
 
-                                valueH = heuN[0]
-                                summation = routeSum + valueStep
-                                f = summation + valueH + i
-                                self.queue.put((f, auxH, [summation, (posN, typeN, codeN), posV], i))
+                                    valueH = heuN[0]
+                                    summation = routeSum + valueStep
+                                    f = summation + valueH + i
+                                    self.queue.put((f, auxH, [summation, (posN, typeN, codeN), posV], i))
 
             square = self._movePriority()
 
