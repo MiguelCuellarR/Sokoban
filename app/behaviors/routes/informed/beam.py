@@ -24,7 +24,7 @@ class Beam(Route):
                 codeV = grid[2]
                 previousV = beamItem[2]
 
-                if grid == self.destiny:
+                if posV == self.destiny[0]:
                     self.auxList.append([posV, previousV, int(heuristicV)])
                     goal = True
                     break
@@ -41,17 +41,20 @@ class Beam(Route):
                         typeN = prio[2]
                         codeN = prio[3]
                         if posN not in self.visited:
-                            for heuN in self.heuristic[posN]:
-                                if heuN[1] == self.destiny[0]:
-                                    i = 0
-                                    if movN == self.priority.second:
-                                        i = 0.01
-                                    elif movN == self.priority.third:
-                                        i = 0.02
-                                    elif movN == self.priority.fourth:
-                                        i = 0.03
+                            if typeN == 'Box' and posN != self.destiny[0]:
+                                continue
+                            else:
+                                for heuN in self.heuristic[posN]:
+                                    if heuN[1] == self.destiny[0]:
+                                        i = 0
+                                        if movN == self.priority.second:
+                                            i = 0.01
+                                        elif movN == self.priority.third:
+                                            i = 0.02
+                                        elif movN == self.priority.fourth:
+                                            i = 0.03
 
-                                    newBeam.append((heuN[0] + i, (posN, typeN, codeN), posV))
+                                        newBeam.append((heuN[0] + i, (posN, typeN, codeN), posV))
 
             if newBeam:
                 level += 1
