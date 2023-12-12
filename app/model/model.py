@@ -48,6 +48,10 @@ class SokobanModel(Model):
 
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
 
+        self.edgesTransform(objectMap, goals, ways)
+        # ObjectMap --> Creacion de Rutas --> objectMapBox
+        # Ways --> Creacion Heuristicas --> WaysBox
+
         heuristicGoal, heuristicBox = {}, {}
         if ways and goals:
             heuristicGoal = HeuristicFactory.createHeuristic(self.heuristics, ways, goals)
@@ -70,9 +74,8 @@ class SokobanModel(Model):
                             nextB = boxAgent.road[0][0]
                             currentB = boxAgent.pos
                             nextR = self.moveIdentify(currentB, nextB)
-
-                            expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, robot,
-                                                                            (nextR, box[1], box[2]),
+                            aim = (nextR, box[1], box[2])
+                            expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, robot, [aim],
                                                                             self.priority, {})
                             agents = self.grid[robot[0]]
                             agent = [agent for agent in agents if isinstance(agent, Robot)]
@@ -85,6 +88,7 @@ class SokobanModel(Model):
                             if box[2] == goal[2]:
                                 expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, box, goal,
                                                                                 self.priority, heuristicGoal)
+
                                 agents = self.grid[box[0]]
                                 agent = [agent for agent in agents if isinstance(agent, Box)]
                                 agent[0].road.append(road)
@@ -97,8 +101,10 @@ class SokobanModel(Model):
                                 currentB = boxAgent.pos
                                 nextR = self.moveIdentify(currentB, nextB)
                                 aim = (nextR, box[1], box[2])
-                                if aim and boxes:
+                                if aim:
                                     heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
+                                    print(f'heuristicBox: {heuristicBox}')
+
                                 expansionOrder, road = RouteFactory.createRoute(self.routes, objectMap, robot, aim,
                                                                                 self.priority, heuristicBox)
                                 agents = self.grid[robot[0]]
@@ -113,17 +119,42 @@ class SokobanModel(Model):
             if box.road[0]:
                 self.block(box)
 
+    def edgesTransform(self, objectMapBox, goals, waysBox):
+        positions = self.edgeCheck(goals)
+        print(f'positions: {positions}')
+        if positions:
+            for position in positions:
+                if position[0] == 0:
+                    for way in waysBox:
+                        if way[0][0] == 0:
+                            print(f'column 0: {way}')
+                elif position[0] == self.width-1:
+                    for way in waysBox:
+                        if way[0][0] == self.width-1:
+                            print(f'column {self.width-1}: {way}')
+
+                if position[1] == 0:
+                    for way in waysBox:
+                        if way[0][1] == 0:
+                            print(f'row 0: {way}')
+                elif position[1] == self.height-1:
+                    for way in waysBox:
+                        if way[0][1] == self.height-1:
+                            print(f'row {self.height-1}: {way}')
+        else:
+            for way in waysBox:
+                if way[0][0] == 0 or way[0][0] == self.width-1 or way[0][1] == 0 or way[0][1] == self.height-1:
+                    print(f'way: {way}')
 
 
-        '''def expansionOrder(self, currentStep):
-        currentStep = self.schedule.steps
-        if currentStep < len(self.expansionOrder):
-            move = self.expansionOrder[currentStep] 
-            nextPos = move[0]
-            imagePath = "resources/numbers/" + str(currentStep) + ".png"
-            expOrd = ExpansionOrder(currentStep + 1000, self, imagePath)
-            self.grid.place_agent(expOrd, nextPos)
-            self.schedule.add(expOrd)'''
+
+
+    def edgeCheck(self, goals):
+        positions = []
+        for goal in goals:
+            if goal[0][0] == 0 or goal[0][0] == self.width - 1 or goal[0][1] == 0 or goal[0][1] == self.height - 1:
+                positions.append(goal[0])
+        return positions
 
     def block(self, box):
         square = self.grid[box.road[0][0]]
@@ -226,7 +257,6 @@ class SokobanModel(Model):
                 return newRPos, newBoxNeighbors[0]
 
         return movements
-
 
     def mapConstructor(self):
         x = 0
@@ -361,3 +391,14 @@ class SokobanModel(Model):
             return current[0], current[1] + 1
         elif current[1] < nextP[1]:
             return current[0], current[1] - 1
+
+
+    '''def expansionOrder(self, currentStep):
+            currentStep = self.schedule.steps
+            if currentStep < len(self.expansionOrder):
+                move = self.expansionOrder[currentStep] 
+                nextPos = move[0]
+                imagePath = "resources/numbers/" + str(currentStep) + ".png"
+                expOrd = ExpansionOrder(currentStep + 1000, self, imagePath)
+                self.grid.place_agent(expOrd, nextPos)
+                self.schedule.add(expOrd)'''
