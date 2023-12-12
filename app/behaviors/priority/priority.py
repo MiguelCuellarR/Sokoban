@@ -1,5 +1,8 @@
 class Priority:
-    def __init__(self, first='L', second='U', third='R', fourth='D'):
+
+    # First     L-U-R-D
+    # Second    D-U-L-R
+    def __init__(self, first='D', second='U', third='L', fourth='R'):
         self.first = first
         self.second = second
         self.third = third
