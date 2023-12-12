@@ -9,7 +9,7 @@ from app.model.model import SokobanModel
 from app.agents.wall import Wall
 from app.agents.expansionOrder import ExpansionOrder
 
-routes = [" ", "AStar", "Beam", "Breadth", "ClimbHill"]
+routes = [" ", "Beam", "Breadth", "ClimbHill"]
 heuristics = [" ", "Euclidian", "Manhattan"]
 
 file = File()

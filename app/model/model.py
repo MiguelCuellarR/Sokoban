@@ -118,7 +118,7 @@ class SokobanModel(Model):
         '''def expansionOrder(self, currentStep):
         currentStep = self.schedule.steps
         if currentStep < len(self.expansionOrder):
-            move = self.expansionOrder[currentStep]
+            move = self.expansionOrder[currentStep] 
             nextPos = move[0]
             imagePath = "resources/numbers/" + str(currentStep) + ".png"
             expOrd = ExpansionOrder(currentStep + 1000, self, imagePath)
