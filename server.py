@@ -10,7 +10,7 @@ from app.agents.wall import Wall
 from app.agents.expansionOrder import ExpansionOrder
 
 routes = [" ", "Beam", "Breadth", "ClimbHill"]
-heuristics = [" ", "Euclidian", "Manhattan"]
+heuristics = [" ", "Euclidian"]
 
 file = File()
 world = file.uploadMap()

@@ -18,7 +18,8 @@ class ClimbHill(Route):
             posV = grid[0]
             previousV = vertex[2]
 
-            if grid[0] == self.destiny[0]:
+
+            if posV == self.destiny[0]:
                 self.auxList.append([posV, previousV, int(heuristicV)])
                 break
 
@@ -37,11 +38,10 @@ class ClimbHill(Route):
                     if posN not in self.visited:
                         for heuN in self.heuristic[posN]:
                             if heuN[1] == self.destiny[0]:
-                                if typeN == 'Box' and posN != self.destiny[0]:
+                                if self.root[1] == 'Robot' and typeN == 'Box' and posN != self.destiny[0]:
                                     continue
                                 else:
                                     auxEdgeList.append([heuN[0], posN, movN, typeN, codeN])
-
                 if auxEdgeList:
                     for aux in auxEdgeList:
                         mov = aux[2]
@@ -65,6 +65,5 @@ class ClimbHill(Route):
                 vertex = queue.get()
                 if not queue.empty():
                     self.levelQueue.appendleft((auxLevel, queue))
-
 
         return self.auxList
