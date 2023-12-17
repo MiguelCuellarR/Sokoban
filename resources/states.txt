@@ -1,0 +1,540 @@
+Nodo 0
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C-b2 C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 1
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C-b2-b-1 C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 2
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C-b-1 C C-b2 C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 3
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C-b-1 C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 4
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C-b-1 C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 5
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C-b-1 R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 6
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C-b-1 R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 7
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C-b-1 R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 8
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C-b-1 C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 9
+C C C C C C C C C C C C C R C
+C R R R C-b-1 R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 10
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C-b-1 C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 11
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C-b-1 C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 12
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C-b-1 C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 13
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C-b-1 C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 14
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C-b-1 R C C R C R R C R R C C R
+C C C C-b2 C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 15
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C-b-1 C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 16
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C-b-1 C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 17
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C-b-1 R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 18
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C-b-1 C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 19
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C-b-1 C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 20
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C-b-1 C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 21
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1-b-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 22
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C-b-2 C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 23
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C-b-2 C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 24
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C-b-2 C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 25
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C-b-2 R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 26
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C-b-2 C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 27
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C-b-2 R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 28
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C-b-2 C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 29
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C-b-2 R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 30
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C-b-2 C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 31
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C-b-2 C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 32
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C-b-2 C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 33
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C-b-2 C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 34
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C-b-2 R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 35
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C-b-2 C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 36
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C-b-2 C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 37
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C-b-2 C C R
+C C C C C C C C C C C C C C C
+
+Nodo 38
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C-b-2 R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 39
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C-b-2 C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 40
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C-b-2 R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 41
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1-b-2 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 42
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C-b-2 C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 43
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C-b-2 R C C R C R R C R R C C R
+C C C C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 44
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C-b-2 C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 45
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C-b-2 C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 46
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C-b-2 C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 47
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C-b-2 R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 48
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C-b-2 C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 49
+C C C C C C C C C C C C C R C
+C R R R C-b-2 R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 50
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C-b-2 C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 51
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1-b-2 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 52
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C-b-2 C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 53
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C-b-2 C R
+C C C C C C C C C C C C C C C
+
+Nodo 54
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C-b-2 C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 55
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C-b-2 R
+C C C C C C C C C C C C C C C
+
+Nodo 56
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C-b-2 R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 57
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C C
+C R C C C R C C C C C R R C-b-2 R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 58
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2 C-b-2 C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+
+Nodo 59
+C C C C C C C C C C C C C R C
+C R R R C R R R C C R C C C C
+C C C C C R M-1 R R C C R M-2-b-2 C C
+C R C C C R C C C C C R R C R
+C C R C C R C R R C R R C C R
+C C C-b1 C C C C C C C C C C C R
+C C C C C C C C C C C C C C C
+

@@ -7,3 +7,4 @@ class Box(Agent):
         super().__init__(unique_id, model)
         self.code = code
         self.road = []
+        self.expansion = []

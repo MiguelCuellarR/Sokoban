@@ -18,8 +18,8 @@ from app.generalFunctions.generalFunction import createObject
 class SokobanModel(Model):
 
     def __init__(self, routes, heuristics, left, up, right, down, width, height):
-
         file = File()
+        self.gameStates = []
         self.world = file.uploadMap()
         self.heuristics = heuristics
         self.routes = routes
@@ -45,11 +45,8 @@ class SokobanModel(Model):
             self.priority = Priority()
 
         self.boxesAgents, self.robotsAgents = [], []
-
         objectMap, robots, boxes, goals, ways = self.mapNeighbors()
-
         WaysBox, objectMapBox = self.edgesTransform(objectMap, goals, ways)
-        #WaysBox, objectMapBox = ways, objectMap
 
         heuristicGoal, heuristicBox = {}, {}
         if WaysBox and goals:
@@ -65,6 +62,7 @@ class SokobanModel(Model):
                             agents = self.grid[box[0]]
                             agent = [agent for agent in agents if isinstance(agent, Box)]
                             agent[0].road.append(road)
+                            agent[0].expansion.append(expansionOrder)
                             self.boxesAgents.append(agent[0])
 
                     for robot in robots:
@@ -87,32 +85,26 @@ class SokobanModel(Model):
                             if box[2] == goal[2]:
                                 expansionOrder, road = RouteFactory.createRoute(self.routes, objectMapBox, box, goal,
                                                                                 self.priority, heuristicGoal)
-
                                 agents = self.grid[box[0]]
                                 agent = [agent for agent in agents if isinstance(agent, Box)]
                                 agent[0].road.append(road)
+                                agent[0].expansion.append(expansionOrder)
                                 self.boxesAgents.append(agent[0])
 
                         for robot in robots:
                             if box[2] == robot[2]:
-
                                 boxAgent = self.boxesAgents[len(self.boxesAgents) - 1]
-                                # print(f'box: {box}, robot: {robot}')
-                                # print(f'boxAgent: {boxAgent}')
                                 nextB = boxAgent.road[0][0]
                                 currentB = boxAgent.pos
                                 nextR = self.moveIdentify(currentB, nextB)
                                 aim = (nextR, box[1], box[2])
-                                #if aim:
-                                    #heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
-                                    # print(f'heuristicBox: {heuristicBox}')
-
                                 expansionOrder, road = RouteFactory.createRoute('Breadth', objectMap, robot, [aim],
                                                                                 self.priority, {})
                                 agents = self.grid[robot[0]]
                                 agent = [agent for agent in agents if isinstance(agent, Robot)]
                                 agent[0].road.append(road)
                                 self.robotsAgents.append(agent[0])
+        self.createGameStates()
 
     def step(self) -> None:
         self.schedule.step()
@@ -120,6 +112,58 @@ class SokobanModel(Model):
             box = self.boxesAgents[0]
             if box.road[0]:
                 self.block(box)
+
+    def createGameStates(self):
+        if self.boxesAgents:
+            matrix = self.createMatrixMap()
+            self.gameStates.append(((), matrix, 0))
+            for box in self.boxesAgents:
+                expansion = box.expansion[0][1:]
+                code = box.code
+                for exp in expansion:
+                    nxt = exp[0]
+                    prev = exp[1]
+                    auxMatrix = []
+                    for state in self.gameStates:
+                        if state[0] == prev and state[2] == code:
+                            auxMatrix = [row[:] for row in state[1]]
+
+                    if not auxMatrix:
+                        auxMatrix = [row[:] for row in matrix]
+
+                    auxMatrix[prev[1]][prev[0]] = 'C'
+                    auxMatrix[nxt[1]][nxt[0]] = auxMatrix[nxt[1]][nxt[0]] + '-b-' + code
+
+                    self.gameStates.append((nxt, auxMatrix, code))
+
+            file = File()
+            file.clearMap()
+            i = 0
+            for state in self.gameStates:
+                file.saveMap(state[1], i)
+                i += 1
+
+    def createMatrixMap(self):
+        matrix = []
+        for i in range(self.height):
+            row = []
+            for j in range(self.width):
+                cellValue = self.grid[j, i]
+                if len(cellValue) == 2:
+                    code = cellValue[1].code
+                    if isinstance(cellValue[1], Goal):
+                        row.append('M-' + code)
+                    elif isinstance(cellValue[1], Box):
+                        row.append('C-b' + code)
+                    elif isinstance(cellValue[1], Robot):
+                        row.append('C')
+                else:
+                    if isinstance(cellValue[0], Wall):
+                        row.append('R')
+                    elif isinstance(cellValue[0], Road):
+                        row.append('C')
+            matrix.append(row)
+        return matrix
 
     def edgesTransform(self, objectMapBox, goals, waysBox):
         newWays = []
@@ -191,9 +235,8 @@ class SokobanModel(Model):
                     movement = self.selectMovement(boxNeighbors, neighbor)
                     objectMap, _, _, _, ways = self.mapNeighbors()
                     aim = (movement[0], 'Box', neighbor.code)
-                    heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
                     _, road = RouteFactory.createRoute("Breadth", objectMap, (robot.pos, 'Robot',
-                                                                                robot.code), aim,
+                                                                              robot.code), aim,
                                                        self.priority, {})
                     if len(neighbor.road[0]) > 1:
                         if neighbor.road[0][0] != movement[1] and neighbor.road[0][0] != neighbor.pos:
@@ -219,7 +262,6 @@ class SokobanModel(Model):
                         objectMap, _, _, _, ways = self.mapNeighbors()
                         nextR = self.moveIdentify(nextPosBox, box.road[0][0])
                         aim = (nextR, 'Box', box.code)
-                        #heuristicBox = HeuristicFactory.createHeuristic(self.heuristics, ways, [aim])
                         _, road = RouteFactory.createRoute('Breadth', objectMap, (robot.pos, 'Robot',
                                                                                   robot.code), aim,
                                                            self.priority, {})
