@@ -14,5 +14,14 @@ class File:
             map_model.append(model)
         return map_model
 
-    def saveMap(self) -> str:
-        pass
+    def saveMap(self, data, i):
+        with open('resources/states.txt', 'a') as file:
+            file.write('Nodo ' + str(i) + '\n')
+            for line in reversed(data):
+                file.write(' '.join(line) + '\n')
+
+            file.write('\n')
+
+    def clearMap (self):
+        with open('resources/states.txt', 'w') as file:
+            file.truncate(0)
